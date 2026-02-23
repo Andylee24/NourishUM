@@ -1,15 +1,33 @@
-import React, { useState, useEffect } from 'react'; // Forced refresh
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Menu, X, Clock, PlayCircle, ChevronRight, User, Search,
   Facebook, Instagram, Twitter, ArrowLeft, Mail, Lock, CheckCircle,
   BookOpen, Target, ExternalLink, Award, FileText, CheckSquare, ArrowRight
 } from 'lucide-react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useParams,
+  useNavigate,
+  useLocation
+} from 'react-router-dom';
 
 const App = () => {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
+  );
+};
+
+const AppContent = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   // --- State Management ---
-  const [currentPage, setCurrentPage] = useState('home'); // 'home', 'login', 'signup', 'detail'
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeModule, setActiveModule] = useState(null);
   const [user, setUser] = useState(null); // null = guest, object = logged in
   const [completedActions, setCompletedActions] = useState({}); // { moduleId: { actionIndex: boolean } }
 
@@ -262,20 +280,27 @@ const App = () => {
       ],
       supplements: [
         { title: "My Plate, My Pledge", url: "https://www.smartcooking.com.my/recipes", type: "link" }
-      ]
+      ],
+      slug: "my-plate-my-pledge"
     }
   ];
 
+  // Add slugs to all modules
+  modules.forEach(m => {
+    if (!m.slug) {
+      m.slug = m.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    }
+  });
+
   // --- Actions ---
-  const handleNavClick = (page) => {
-    setCurrentPage(page);
+  const handleNavClick = (path) => {
+    navigate(path);
     setIsMenuOpen(false);
     window.scrollTo(0, 0);
   };
 
   const openModule = (module) => {
-    setActiveModule(module);
-    setCurrentPage('detail');
+    navigate(`/modules/${module.slug}`);
     window.scrollTo(0, 0);
   };
 
@@ -293,13 +318,13 @@ const App = () => {
     e.preventDefault();
     setTimeout(() => {
       setUser({ name: "Student", email: "student@um.edu.my" });
-      setCurrentPage('home');
+      navigate('/');
     }, 500);
   };
 
   const handleLogout = () => {
     setUser(null);
-    setCurrentPage('home');
+    navigate('/');
   };
 
   // --- Sub-Components ---
@@ -343,9 +368,9 @@ const App = () => {
         </form>
         <div className="mt-6 text-center text-sm text-gray-600">
           {type === 'login' ? (
-            <>Don't have an account? <button onClick={() => setCurrentPage('signup')} className="text-[#827717] font-bold hover:underline">Sign up</button></>
+            <>Don't have an account? <Link to="/signup" className="text-[#827717] font-bold hover:underline">Sign up</Link></>
           ) : (
-            <>Already have an account? <button onClick={() => setCurrentPage('login')} className="text-[#827717] font-bold hover:underline">Log in</button></>
+            <>Already have an account? <Link to="/login" className="text-[#827717] font-bold hover:underline">Log in</Link></>
           )}
         </div>
       </div>
@@ -374,8 +399,18 @@ const App = () => {
     );
   });
 
-  const ModuleDetailView = ({ module }) => {
-    if (!module) return null;
+  const ModuleDetailView = () => {
+    const { slug } = useParams();
+    const module = modules.find(m => m.slug === slug);
+
+    if (!module) return (
+      <div className="flex-grow flex items-center justify-center py-20">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Module not found</h2>
+          <Link to="/" className="text-[#827717] font-bold hover:underline">Back to Home</Link>
+        </div>
+      </div>
+    );
 
     const progress = completedActions[module.id]
       ? (Object.values(completedActions[module.id]).filter(Boolean).length / module.actionSteps.length) * 100
@@ -388,13 +423,13 @@ const App = () => {
         {/* Navigation Header */}
         <div className="bg-white border-b sticky top-[64px] z-40 shadow-sm">
           <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-            <button
-              onClick={() => setCurrentPage('home')}
+            <Link
+              to="/"
               className="flex items-center text-gray-500 hover:text-[#D4E157] transition font-medium"
             >
               <ArrowLeft size={20} className="mr-2" />
-              Back to Modules
-            </button>
+              Back to Home
+            </Link>
             <div className="hidden md:flex items-center space-x-2 text-sm text-gray-600">
               <span className="font-semibold text-[#827717]">Module {module.id} of {modules.length}</span>
             </div>
@@ -509,13 +544,13 @@ const App = () => {
                 <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
               </button>
             ) : (
-              <button
-                onClick={() => setCurrentPage('home')}
+              <Link
+                to="/"
                 className="group flex items-center bg-[#D4E157] text-gray-800 border border-black px-6 py-3 rounded-full hover:bg-[#F0F4C3] transition shadow-lg font-bold text-lg"
               >
                 Complete Course
                 <CheckCircle size={20} className="ml-2" />
-              </button>
+              </Link>
             )}
           </div>
         </div>
@@ -663,7 +698,7 @@ const App = () => {
           </div>
 
           <nav className="hidden md:flex items-center space-x-8 font-semibold">
-            <button onClick={() => handleNavClick('home')} className={`hover:bg-white/20 px-3 py-1 rounded transition-colors ${currentPage === 'home' ? 'bg-white/20' : ''}`}>Curriculum</button>
+            <Link to="/" className={`hover:bg-white/20 px-3 py-1 rounded transition-colors ${location.pathname === '/' ? 'bg-white/20' : ''}`}>Curriculum</Link>
             <button className="hover:bg-white/20 px-3 py-1 rounded transition-colors">Resources</button>
 
             {user ? (
@@ -677,9 +712,9 @@ const App = () => {
                 </button>
               </div>
             ) : (
-              <button onClick={() => handleNavClick('login')} className="bg-gray-800 text-white px-6 py-2 rounded-full hover:bg-gray-700 transition shadow hover:shadow-lg transform hover:-translate-y-0.5">
+              <Link to="/login" className="bg-gray-800 text-white px-6 py-2 rounded-full hover:bg-gray-700 transition shadow hover:shadow-lg transform hover:-translate-y-0.5">
                 Login
-              </button>
+              </Link>
             )}
           </nav>
 
@@ -690,21 +725,23 @@ const App = () => {
 
         {isMenuOpen && (
           <div className="md:hidden bg-[#c0ca33] px-4 py-4 space-y-4 shadow-inner">
-            <button onClick={() => handleNavClick('home')} className="block hover:text-white w-full text-left font-medium">Curriculum</button>
+            <Link to="/" onClick={() => setIsMenuOpen(false)} className="block hover:text-white w-full text-left font-medium">Curriculum</Link>
             {user ? (
               <button onClick={handleLogout} className="w-full bg-gray-800 text-white px-5 py-3 rounded-lg font-bold">Logout</button>
             ) : (
-              <button onClick={() => handleNavClick('login')} className="w-full bg-gray-800 text-white px-5 py-3 rounded-lg font-bold">Login</button>
+              <Link to="/login" onClick={() => setIsMenuOpen(false)} className="w-full bg-gray-800 text-white px-5 py-3 rounded-lg font-bold text-center">Login</Link>
             )}
           </div>
         )}
       </header>
 
       <main className="flex-grow flex flex-col">
-        {currentPage === 'home' && <HomeView />}
-        {currentPage === 'login' && <AuthView type="login" />}
-        {currentPage === 'signup' && <AuthView type="signup" />}
-        {currentPage === 'detail' && <ModuleDetailView module={activeModule} />}
+        <Routes>
+          <Route path="/" element={<HomeView />} />
+          <Route path="/login" element={<AuthView type="login" />} />
+          <Route path="/signup" element={<AuthView type="signup" />} />
+          <Route path="/modules/:slug" element={<ModuleDetailView />} />
+        </Routes>
       </main>
 
       <footer className="bg-gray-900 text-gray-400 py-12 px-4">
