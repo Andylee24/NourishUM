@@ -34,7 +34,7 @@ const App = () => {
         "Reflection prompt: Write down why this principle matters for your health or the environment."
       ],
       supplements: [
-        { title: "Sustainable Diet Principles Infographic", type: "document" }
+        { title: "What is a Sustainable Diet?", url: "/supplements/Module 1.pdf", type: "document" }
       ]
     },
     {
@@ -57,7 +57,7 @@ const App = () => {
         "Key takeaway identification: Write down one key message that changed your thinking."
       ],
       supplements: [
-        { title: "Environmental Impact Image", type: "image" }
+        { title: "Our Choices Matter", url: "/supplements/Module 2.pdf", type: "document" }
       ]
     },
     {
@@ -80,8 +80,8 @@ const App = () => {
         "Feasibility check: Identify barriers and solutions."
       ],
       supplements: [
-        { title: "9 Inexpensive Superfoods in Malaysian Diet", url: "https://story.motherhood.com.my/blog/9-inexpensive-superfoods-you-might-find-in-your-malaysian-diet/", type: "link" },
-        { title: "Food Carbon Footprint Table", type: "document" }
+        { title: "Buying Food Locally (Link)", url: "https://story.motherhood.com.my/blog/9-inexpensive-superfoods-you-might-find-in-your-malaysian-diet/", type: "link" },
+        { title: "Buying Food Locally (PDF)", url: "/supplements/Module 3.pdf", type: "document" }
       ]
     },
     {
@@ -103,7 +103,8 @@ const App = () => {
         "Real-life application: Identify one small change for next shopping trip."
       ],
       supplements: [
-        { title: "Label Information Guide", url: "https://unccelearn.org/course/view.php?id=56&sectionid=702", type: "link" }
+        { title: "Reading Labels (Link)", url: "https://unccelearn.org/course/view.php?id=56&sectionid=702", type: "link" },
+        { title: "Reading Labels (PDF)", url: "/supplements/Module 4.pdf", type: "document" }
       ]
     },
     {
@@ -125,7 +126,9 @@ const App = () => {
         "Real-life commitment: Set a goal for your next meal."
       ],
       supplements: [
-        { title: "Eating Healthy with MHP", url: "https://imu.edu.my/imunews/eating-healthy-with-the-malaysian-healthy-plate", type: "link" }
+        { title: "Malaysian Healthy Plate (Link)", url: "https://imu.edu.my/imunews/eating-healthy-with-the-malaysian-healthy-plate", type: "link" },
+        { title: "Malaysian Healthy Plate (PDF 1)", url: "/supplements/Module 5_1.pdf", type: "document" },
+        { title: "Malaysian Healthy Plate (PDF 2)", url: "/supplements/Module 5_2.pdf", type: "document" }
       ]
     },
     {
@@ -147,7 +150,8 @@ const App = () => {
         "Simple plant-forward swap: Commit to one change for the week."
       ],
       supplements: [
-        { title: "Seasonal Local Options Infographic", type: "infographic" }
+        { title: "Fruits & Vegetables (PDF 1)", url: "/supplements/Module 6_1.pdf", type: "document" },
+        { title: "Fruits & Vegetables (PDF 2)", url: "/supplements/Module 6_2.pdf", type: "document" }
       ]
     },
     {
@@ -169,7 +173,7 @@ const App = () => {
         "Swap challenge: Try a whole grain option this week."
       ],
       supplements: [
-        { title: "Meal Swap Plan Factsheet", type: "document" }
+        { title: "Eating Patterns: Grains", url: "/supplements/Module 7.pdf", type: "document" }
       ]
     },
     {
@@ -191,7 +195,7 @@ const App = () => {
         "Sustainable protein choice: Choose lower-impact option when eating out."
       ],
       supplements: [
-        { title: "Protein Factsheet", type: "document" }
+        { title: "Eating Patterns: Protein", url: "/supplements/Module 8.pdf", type: "document" }
       ]
     },
     {
@@ -212,7 +216,10 @@ const App = () => {
         "Separate waste: Recycle and compost where possible.",
         "Reduce packaging: Bring reusable items."
       ],
-      supplements: []
+      supplements: [
+        { title: "Food Waste & Packaging (PDF 1)", url: "/supplements/Module 9_1.pdf", type: "document" },
+        { title: "Food Waste & Packaging (PDF 2)", url: "/supplements/Module 9_2.pdf", type: "document" }
+      ]
     },
     {
       id: 10,
@@ -232,7 +239,9 @@ const App = () => {
         "Educate others: Set an example.",
         "Enjoy nutritious meals with friends/family."
       ],
-      supplements: []
+      supplements: [
+        { title: "Changing Eating Habits", url: "/supplements/Module 10.pdf", type: "document" }
+      ]
     },
     {
       id: 11,
@@ -252,7 +261,7 @@ const App = () => {
         "Share your pledge with a friend."
       ],
       supplements: [
-        { title: "Recipe Website", url: "https://www.smartcooking.com.my/recipes", type: "link" }
+        { title: "My Plate, My Pledge", url: "https://www.smartcooking.com.my/recipes", type: "link" }
       ]
     }
   ];
@@ -431,7 +440,7 @@ const App = () => {
             <div className="border-2 border-gray-800 rounded-lg p-6 md:p-8 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)] transition-shadow">
               <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
                 <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800">{module.id === 11 ? 2 : 3}</span>
-                Factsheet: Sustainable diet principles
+                Supplements
               </h2>
               <div className="grid gap-3">
                 {module.supplements && module.supplements.length > 0 ? (
