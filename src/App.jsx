@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import heroBg from './assets/hero-bg.png';
 import {
   Menu, X, Clock, PlayCircle, ChevronRight, User, Search,
   Facebook, Instagram, Twitter, ArrowLeft, Mail, Lock, CheckCircle,
@@ -37,7 +38,7 @@ const AppContent = () => {
       id: 1,
       title: "What is a Sustainable Diet?",
       description: "Define a sustainable diet and explain its key components in relation to health and environmental sustainability.",
-      time: "8 mins",
+      time: "5 mins",
       type: "video",
       videoId: "T7RFNuHIUhE",
       image: "https://img.youtube.com/vi/T7RFNuHIUhE/maxresdefault.jpg",
@@ -59,7 +60,7 @@ const AppContent = () => {
       id: 2,
       title: "Our Choices Matter",
       description: "Explain how food is linked to big environmental issues and describe the benefits of healthy food for you and the planet.",
-      time: "10 mins",
+      time: "6 mins",
       type: "video",
       videoId: "EyvgpqEGjcU",
       image: "https://img.youtube.com/vi/EyvgpqEGjcU/maxresdefault.jpg",
@@ -82,7 +83,7 @@ const AppContent = () => {
       id: 3,
       title: "Buying Food Locally",
       description: "Discuss the environmental and social impact of foods depending on where and how it was produced and transported.",
-      time: "12 mins",
+      time: "6 mins",
       type: "video",
       videoId: "qq-QkVbUEVM",
       image: "https://img.youtube.com/vi/qq-QkVbUEVM/maxresdefault.jpg",
@@ -106,7 +107,7 @@ const AppContent = () => {
       id: 4,
       title: "Reading Labels",
       description: "Identify information on food labels that is important to you and make informed choices when shopping.",
-      time: "9 mins",
+      time: "7 mins",
       type: "video",
       videoId: "7KW57Vo3WWE",
       image: "https://img.youtube.com/vi/7KW57Vo3WWE/maxresdefault.jpg",
@@ -129,7 +130,7 @@ const AppContent = () => {
       id: 5,
       title: "Malaysian Healthy Plate",
       description: "Describe the key components and proportions of the Malaysian Healthy Plate and apply it to everyday meals.",
-      time: "8 mins",
+      time: "4 mins",
       type: "video",
       videoId: "D8FQgpD_Fjw",
       image: "https://img.youtube.com/vi/D8FQgpD_Fjw/hqdefault.jpg",
@@ -153,7 +154,7 @@ const AppContent = () => {
       id: 6,
       title: "Eating Patterns: Fruits & Vegetables",
       description: "Understand the health/environmental benefits of higher F/V intake and strategies to increase it.",
-      time: "10 mins",
+      time: "5 mins",
       type: "video",
       videoId: "qJsjpo7Pi8I",
       image: "https://img.youtube.com/vi/qJsjpo7Pi8I/hqdefault.jpg",
@@ -176,7 +177,7 @@ const AppContent = () => {
       id: 7,
       title: "Eating Patterns: Grains",
       description: "Differentiate whole grains from refined carbohydrates and explain the benefits of choosing whole grains.",
-      time: "10 mins",
+      time: "3 mins",
       type: "video",
       videoId: "8USo-0w9QjE",
       image: "https://img.youtube.com/vi/8USo-0w9QjE/maxresdefault.jpg",
@@ -198,7 +199,7 @@ const AppContent = () => {
       id: 8,
       title: "Eating Patterns: Protein",
       description: "Compare environmental impact of protein sources and select balanced, sustainable choices.",
-      time: "10 mins",
+      time: "3 mins",
       type: "video",
       videoId: "ZsFjCDL2-l8",
       image: "https://img.youtube.com/vi/ZsFjCDL2-l8/hqdefault.jpg",
@@ -220,7 +221,7 @@ const AppContent = () => {
       id: 9,
       title: "Food Waste & Packaging",
       description: "Discuss how food waste affects nature and society, and identify strategies to reduce it.",
-      time: "8 mins",
+      time: "5 mins",
       type: "video",
       videoId: "k-m0LDbkVhg",
       image: "https://img.youtube.com/vi/k-m0LDbkVhg/maxresdefault.jpg",
@@ -243,7 +244,7 @@ const AppContent = () => {
       id: 10,
       title: "Changing Eating Habits",
       description: "Explain why we need to act for sustainable food systems and identify personal actions.",
-      time: "10 mins",
+      time: "7 mins",
       type: "video",
       videoId: "Aah3Q9SO5wg",
       image: "https://img.youtube.com/vi/Aah3Q9SO5wg/maxresdefault.jpg",
@@ -265,7 +266,7 @@ const AppContent = () => {
       id: 11,
       title: "My Plate, My Pledge",
       description: "Reflect on current behaviors and develop a personalized sustainable eating pledge.",
-      time: "15 mins",
+      time: "5 mins",
       type: "review",
       image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=1200",
       objectives: [
@@ -563,7 +564,7 @@ const AppContent = () => {
       <section className="relative text-white overflow-hidden min-h-[600px] flex items-center">
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0">
-          <img src="/src/assets/hero-bg.png" alt="Background" className="w-full h-full object-cover" />
+          <img src={heroBg} alt="Background" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#5C6BC0]/90 to-[#7986CB]/40 mix-blend-multiply"></div>
           <div className="absolute inset-0 bg-black/10"></div>
         </div>
@@ -585,21 +586,12 @@ const AppContent = () => {
             </p>
 
             <div className="pt-4 flex flex-wrap gap-4">
-              {!user ? (
-                <button onClick={() => setCurrentPage('signup')} className="bg-[#D4E157] text-gray-900 font-bold px-8 py-4 rounded-full hover:bg-white hover:scale-105 transition-all duration-300 shadow-xl flex items-center group">
-                  Start Learning Now
-                  <ChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                </button>
-              ) : (
-                <button onClick={() => document.getElementById('modules').scrollIntoView({ behavior: 'smooth' })} className="bg-[#D4E157] text-gray-900 font-bold px-8 py-4 rounded-full hover:bg-white hover:scale-105 transition-all duration-300 shadow-xl">
-                  Continue Learning
-                </button>
-              )}
               <button
                 onClick={() => document.getElementById('modules').scrollIntoView({ behavior: 'smooth' })}
-                className="px-8 py-4 rounded-full border-2 border-white/30 hover:bg-white/10 backdrop-blur-sm transition-all text-white font-medium"
+                className="bg-[#D4E157] text-gray-900 font-bold px-8 py-4 rounded-full hover:bg-white hover:scale-105 transition-all duration-300 shadow-xl flex items-center group"
               >
                 Explore Modules
+                <ChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </button>
             </div>
           </div>
@@ -690,12 +682,16 @@ const AppContent = () => {
     <div className="min-h-screen flex flex-col font-sans bg-[#FFFFF0]">
       <header className="bg-[#D4E157] text-gray-800 shadow-lg sticky top-0 z-50">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => handleNavClick('home')}>
+          <Link
+            to="/"
+            className="flex items-center space-x-3 cursor-pointer"
+            onClick={() => setIsMenuOpen(false)}
+          >
             <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-md transform rotate-3">
               <span className="text-2xl">🌱</span>
             </div>
             <h1 className="text-xl font-bold tracking-tight">NourishUM</h1>
-          </div>
+          </Link>
 
           <nav className="hidden md:flex items-center space-x-8 font-semibold">
             <Link to="/" className={`hover:bg-white/20 px-3 py-1 rounded transition-colors ${location.pathname === '/' ? 'bg-white/20' : ''}`}>Curriculum</Link>
@@ -753,13 +749,7 @@ const AppContent = () => {
             </div>
             <p className="text-sm">A student-led initiative for sustainable eating at UM.</p>
           </div>
-          <div>
-            <h4 className="text-white font-bold mb-4">Learn</h4>
-            <ul className="space-y-2 text-sm">
-              <li><button onClick={() => handleNavClick('home')} className="hover:text-[#D4E157]">Curriculum</button></li>
-              <li><a href="#" className="hover:text-[#D4E157]">Recipes</a></li>
-            </ul>
-          </div>
+
           <div>
             <h4 className="text-white font-bold mb-4">Connect</h4>
             <div className="flex space-x-4">
@@ -770,7 +760,7 @@ const AppContent = () => {
           </div>
         </div>
         <div className="border-t border-gray-800 pt-8 text-center text-xs">
-          &copy; 2024 NourishUM. All rights reserved.
+          &copy; 2026 NourishUM. All rights reserved.
         </div>
       </footer>
     </div>
