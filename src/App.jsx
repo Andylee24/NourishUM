@@ -456,7 +456,7 @@ const AppContent = () => {
                   ) : (
                     <div className="rounded-lg border-2 border-gray-800 overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)]">
                       <iframe
-                        src={item.url}
+                        src={`${item.url}#toolbar=0`}
                         title={item.title}
                         className="w-full h-[600px] border-none"
                       ></iframe>
@@ -474,7 +474,7 @@ const AppContent = () => {
               </div>
             ) : (
               <iframe
-                src={url}
+                src={`${url}#toolbar=0`}
                 title={title}
                 className="w-full h-[700px] border-none"
                 style={{ minHeight: '700px' }}
