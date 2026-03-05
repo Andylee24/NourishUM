@@ -76,7 +76,11 @@ const AppContent = () => {
         "Key takeaway identification: Write down one key message that changed your thinking."
       ],
       supplements: [
-        { title: "Our Choices Matter", url: "/supplements/Module 2.pdf", type: "document" }
+        { title: "Our Choices Matter (PDF)", url: "/supplements/Module 2.pdf", type: "document" },
+        { title: "Environmental Impact 1", url: "/supplements/Module 2 pic 1.webp", type: "image" },
+        { title: "Environmental Impact 2", url: "/supplements/Module 2 pic 2.webp", type: "image" },
+        { title: "Environmental Impact 3", url: "/supplements/Module 2 pic 3.jpeg", type: "image" },
+        { title: "Environmental Impact 4", url: "/supplements/Module 2 pic 4.jpeg", type: "image" }
       ]
     },
     {
@@ -122,8 +126,7 @@ const AppContent = () => {
         "Real-life application: Identify one small change for next shopping trip."
       ],
       supplements: [
-        { title: "Reading Labels (Link)", url: "https://unccelearn.org/course/view.php?id=56&sectionid=702", type: "link" },
-        { title: "Reading Labels (PDF)", url: "/supplements/Module 4.pdf", type: "document" }
+        { title: "Reading Labels", url: "/supplements/Module 4.pdf", type: "document" }
       ]
     },
     {
@@ -145,9 +148,8 @@ const AppContent = () => {
         "Real-life commitment: Set a goal for your next meal."
       ],
       supplements: [
-        { title: "Malaysian Healthy Plate (Link)", url: "https://imu.edu.my/imunews/eating-healthy-with-the-malaysian-healthy-plate", type: "link" },
-        { title: "Malaysian Healthy Plate (PDF 1)", url: "/supplements/Module 5_1.pdf", type: "document" },
-        { title: "Malaysian Healthy Plate (PDF 2)", url: "/supplements/Module 5_2.pdf", type: "document" }
+        { title: "Eating Healthy with the Malaysian Healthy Plate", url: "https://imu.edu.my/imunews/eating-healthy-with-the-malaysian-healthy-plate", type: "link" },
+        { title: "Malaysian Healthy Plate", url: "/supplements/Module 5_2.pdf", type: "document" }
       ]
     },
     {
@@ -169,8 +171,8 @@ const AppContent = () => {
         "Simple plant-forward swap: Commit to one change for the week."
       ],
       supplements: [
-        { title: "Fruits & Vegetables (PDF 1)", url: "/supplements/Module 6_1.pdf", type: "document" },
-        { title: "Fruits & Vegetables (PDF 2)", url: "/supplements/Module 6_2.pdf", type: "document" }
+        { title: "Fruits & Vegetables (PDF 2)", url: "/supplements/Module 6_2.pdf", type: "document" },
+        { title: "Fruits & Vegetables (PDF 1)", url: "/supplements/Module 6_1.pdf", type: "document" }
       ]
     },
     {
@@ -280,7 +282,7 @@ const AppContent = () => {
         "Share your pledge with a friend."
       ],
       supplements: [
-        { title: "My Plate, My Pledge", url: "https://www.smartcooking.com.my/recipes", type: "link" }
+        { title: "Recipe Website", url: "https://www.smartcooking.com.my/recipes", type: "link" }
       ],
       slug: "my-plate-my-pledge"
     }
@@ -381,7 +383,7 @@ const AppContent = () => {
   // Memoized VideoPlayer to prevent re-renders when other state changes (like checkboxes)
   const VideoPlayer = React.memo(({ videoId, title }) => {
     return (
-      <div className="bg-black rounded-lg overflow-hidden aspect-video border border-gray-800">
+      <div className="bg-black rounded-lg overflow-hidden aspect-video border border-gray-800 shadow-inner">
         {videoId ? (
           <iframe
             className="w-full h-full"
@@ -396,6 +398,54 @@ const AppContent = () => {
             <p>Video content unavailable</p>
           </div>
         )}
+      </div>
+    );
+  });
+
+  // New Memoized SupplementPreview component
+  const SupplementPreview = React.memo(({ url, title, type = 'document', items = [] }) => {
+    return (
+      <div className="border-2 border-gray-800 rounded-lg overflow-hidden bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)]">
+        <div className="bg-gray-50 px-4 py-2 border-b-2 border-gray-800">
+          <span className="text-sm font-bold text-gray-800 flex items-center">
+            {type === 'image' || (items.length > 0 && items[0].type === 'image') ? (
+              <PlayCircle size={16} className="mr-2 text-[#827717]" />
+            ) : (
+              <FileText size={16} className="mr-2 text-[#827717]" />
+            )}
+            {title}
+          </span>
+        </div>
+        <div className="w-full bg-gray-100 overflow-y-auto custom-scrollbar max-h-[600px]">
+          {items.length > 0 ? (
+            <div className="flex flex-col">
+              {items.map((item, idx) => (
+                <div key={idx} className="w-full border-b border-gray-200 last:border-b-0">
+                  {item.type === 'image' ? (
+                    <img src={item.url} alt={item.title} className="w-full h-auto object-contain" />
+                  ) : (
+                    <iframe
+                      src={item.url}
+                      title={item.title}
+                      className="w-full h-[600px] border-none"
+                    ></iframe>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            type === 'image' ? (
+              <img src={url} alt={title} className="w-full h-auto object-contain" />
+            ) : (
+              <iframe
+                src={url}
+                title={title}
+                className="w-full h-[600px] border-none"
+                style={{ minHeight: '600px' }}
+              ></iframe>
+            )
+          )}
+        </div>
       </div>
     );
   });
@@ -480,19 +530,54 @@ const AppContent = () => {
               </h2>
               <div className="grid gap-3">
                 {module.supplements && module.supplements.length > 0 ? (
-                  module.supplements.map((item, idx) => (
-                    <a
-                      key={idx}
-                      href={item.url || "#"}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex items-center p-4 rounded border-2 border-dashed border-gray-300 hover:border-[#D4E157] hover:bg-[#F9FBE7] transition group cursor-pointer"
-                    >
-                      {item.type === 'link' ? <ExternalLink size={24} className="text-gray-400 group-hover:text-[#827717] mr-4" /> : <FileText size={24} className="text-gray-400 group-hover:text-[#827717] mr-4" />}
-                      <span className="text-lg font-medium text-gray-700 group-hover:text-gray-900">{item.title}</span>
-                      <ExternalLink size={16} className="ml-auto opacity-0 group-hover:opacity-50" />
-                    </a>
-                  ))
+                  <>
+                    {/* 1. Show links first */}
+                    {module.supplements.map((item, idx) => {
+                      const isPreviewed = ((module.id === 1 || module.id === 4 || module.id === 5 ||
+                        module.id === 6 || module.id === 7 || module.id === 8 ||
+                        module.id === 9 || module.id === 10) && item.type === 'document') ||
+                        (module.id === 2); // Hide all links for Module 2 since we use consolidated preview
+
+                      if (isPreviewed) return null;
+
+                      return (
+                        <div key={idx} className="mb-4 last:mb-0">
+                          <a
+                            href={item.url || "#"}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center p-4 rounded border-2 border-dashed border-gray-300 hover:border-[#D4E157] hover:bg-[#F9FBE7] transition group cursor-pointer"
+                          >
+                            {item.type === 'link' ? <ExternalLink size={24} className="text-gray-400 group-hover:text-[#827717] mr-4" /> : <FileText size={24} className="text-gray-400 group-hover:text-[#827717] mr-4" />}
+                            <span className="text-lg font-medium text-gray-700 group-hover:text-gray-900">{item.title}</span>
+                            <ExternalLink size={16} className="ml-auto opacity-0 group-hover:opacity-50" />
+                          </a>
+                        </div>
+                      );
+                    })}
+
+                    {/* 2. Show Previews after links */}
+
+                    {/* Specific Preview for Module 1, 4, 5, 6, 7, 8, 9 & 10 (Documents) */}
+                    {(module.id === 1 || module.id === 4 || module.id === 5 || module.id === 6 ||
+                      module.id === 7 || module.id === 8 || module.id === 9 || module.id === 10) && (
+                        <div className="space-y-4 mt-4">
+                          {module.supplements.filter(i => i.type === 'document').map((item, idx) => (
+                            <SupplementPreview key={idx} url={item.url} title={item.title} />
+                          ))}
+                        </div>
+                      )}
+
+                    {/* Specific Preview for Module 2 (All Items) */}
+                    {module.id === 2 && (
+                      <div className="space-y-4 mt-4">
+                        <SupplementPreview
+                          title="Our Choices Matter"
+                          items={module.supplements}
+                        />
+                      </div>
+                    )}
+                  </>
                 ) : (
                   <p className="text-gray-500 italic p-4 border-2 border-dashed border-gray-200 rounded">No factsheet available for this module yet.</p>
                 )}
