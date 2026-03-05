@@ -76,7 +76,6 @@ const AppContent = () => {
         "Key takeaway identification: Write down one key message that changed your thinking."
       ],
       supplements: [
-        { title: "Our Choices Matter (PDF)", url: "/supplements/Module 2.pdf", type: "document" },
         { title: "Environmental Impact 1", url: "/supplements/Module 2 pic 1.webp", type: "image" },
         { title: "Environmental Impact 2", url: "/supplements/Module 2 pic 2.webp", type: "image" },
         { title: "Environmental Impact 3", url: "/supplements/Module 2 pic 3.jpeg", type: "image" },
