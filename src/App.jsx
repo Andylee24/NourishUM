@@ -401,46 +401,83 @@ const AppContent = () => {
     );
   });
 
-  // New Memoized SupplementPreview component
+  // New Memoized SupplementPreview component with improved UI
   const SupplementPreview = React.memo(({ url, title, type = 'document', items = [] }) => {
+    const isImageMode = type === 'image' || (items.length > 0 && items[0].type === 'image');
+    const mainUrl = items.length > 0 ? items[0].url : url;
+
     return (
-      <div className="border-2 border-gray-800 rounded-lg overflow-hidden bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)]">
-        <div className="bg-gray-50 px-4 py-2 border-b-2 border-gray-800">
-          <span className="text-sm font-bold text-gray-800 flex items-center">
-            {type === 'image' || (items.length > 0 && items[0].type === 'image') ? (
-              <PlayCircle size={16} className="mr-2 text-[#827717]" />
-            ) : (
-              <FileText size={16} className="mr-2 text-[#827717]" />
-            )}
-            {title}
-          </span>
+      <div className="border-2 border-gray-800 rounded-xl overflow-hidden bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] transition-all duration-300">
+        {/* macOS-style Window Header */}
+        <div className="bg-white px-4 py-3 border-b-2 border-gray-800 flex items-center justify-between">
+          <div className="flex space-x-2 w-20">
+            <div className="w-3 h-3 rounded-full bg-[#FF5F56] border border-black/10"></div>
+            <div className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-black/10"></div>
+            <div className="w-3 h-3 rounded-full bg-[#27C93F] border border-black/10"></div>
+          </div>
+
+          <div className="flex-grow text-center">
+            <span className="text-xs font-bold text-gray-800 uppercase tracking-widest flex items-center justify-center">
+              {isImageMode ? (
+                <PlayCircle size={14} className="mr-2 text-[#827717]" />
+              ) : (
+                <FileText size={14} className="mr-2 text-[#827717]" />
+              )}
+              {title}
+            </span>
+          </div>
+
+          <div className="flex justify-end w-20">
+            <a
+              href={mainUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="p-1 hover:bg-gray-100 rounded transition-colors text-gray-500 hover:text-black"
+              title="Open in new window"
+            >
+              <ExternalLink size={16} />
+            </a>
+          </div>
         </div>
-        <div className="w-full bg-gray-100 overflow-y-auto custom-scrollbar max-h-[600px]">
+
+        {/* Content Area */}
+        <div className="w-full bg-[#F5F5F5] overflow-y-auto custom-scrollbar max-h-[700px]">
           {items.length > 0 ? (
-            <div className="flex flex-col">
+            <div className="p-4 md:p-8 space-y-8">
               {items.map((item, idx) => (
-                <div key={idx} className="w-full border-b border-gray-200 last:border-b-0">
+                <div key={idx} className="group relative">
                   {item.type === 'image' ? (
-                    <img src={item.url} alt={item.title} className="w-full h-auto object-contain" />
+                    <div className="bg-white p-3 rounded-lg border-2 border-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] transform transition-transform group-hover:scale-[1.02] duration-300">
+                      <img src={item.url} alt={item.title} className="w-full h-auto rounded-sm object-contain" />
+                      <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between">
+                        <span className="text-xs font-bold text-gray-500 italic">{item.title}</span>
+                      </div>
+                    </div>
                   ) : (
-                    <iframe
-                      src={item.url}
-                      title={item.title}
-                      className="w-full h-[600px] border-none"
-                    ></iframe>
+                    <div className="rounded-lg border-2 border-gray-800 overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)]">
+                      <iframe
+                        src={item.url}
+                        title={item.title}
+                        className="w-full h-[600px] border-none"
+                      ></iframe>
+                    </div>
                   )}
                 </div>
               ))}
             </div>
           ) : (
             type === 'image' ? (
-              <img src={url} alt={title} className="w-full h-auto object-contain" />
+              <div className="p-4 md:p-8 flex justify-center">
+                <div className="bg-white p-3 rounded-lg border-2 border-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] max-w-2xl">
+                  <img src={url} alt={title} className="w-full h-auto rounded-sm object-contain" />
+                </div>
+              </div>
             ) : (
               <iframe
                 src={url}
                 title={title}
-                className="w-full h-[600px] border-none"
-                style={{ minHeight: '600px' }}
+                className="w-full h-[700px] border-none"
+                style={{ minHeight: '700px' }}
               ></iframe>
             )
           )}
