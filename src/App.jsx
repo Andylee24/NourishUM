@@ -216,6 +216,7 @@ const AppContent = () => {
         "Sustainable protein choice: Choose lower-impact option when eating out."
       ],
       supplements: [
+        { title: "Eating Patterns: Protein", url: "/supplements/Module 8 supplement 1.pdf", type: "document" },
         { title: "Related Sustainable Diet Principles", url: "/supplements/Module 8.pdf", type: "document" }
       ]
     },
