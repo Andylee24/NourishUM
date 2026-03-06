@@ -103,8 +103,8 @@ const AppContent = () => {
       ],
       supplements: [
         { title: "9 Inexpensive Superfoods You Might Find in Your Malaysian Diet", url: "https://story.motherhood.com.my/blog/9-inexpensive-superfoods-you-might-find-in-your-malaysian-diet/", type: "link" },
-        { title: "Nutrition Guide (Image)", url: "/supplements/Module 3 supplement 1.png", type: "image" },
-        { title: "Nutrition Guide (PDF)", url: "/supplements/Module 3 supplement 2.pdf", type: "document" }
+        { title: "Buying Food Locally", url: "/supplements/Module 3 supplement 1.png", type: "image" },
+        { title: "Related Sustainable Diet Principles", url: "/supplements/Module 3 supplement 2.pdf", type: "document" }
       ]
     },
     {
@@ -149,7 +149,7 @@ const AppContent = () => {
       ],
       supplements: [
         { title: "Eating Healthy with the Malaysian Healthy Plate", url: "https://imu.edu.my/imunews/eating-healthy-with-the-malaysian-healthy-plate", type: "link" },
-        { title: "Malaysian Healthy Plate", url: "/supplements/Module 5_2.pdf", type: "document" }
+        { title: "Related Sustainable Diet Principles", url: "/supplements/Module 5_2.pdf", type: "document" }
       ]
     },
     {
@@ -171,8 +171,8 @@ const AppContent = () => {
         "Simple plant-forward swap: Commit to one change for the week."
       ],
       supplements: [
-        { title: "Fruits & Vegetables (PDF 1)", url: "/supplements/Module 6_2.pdf", type: "document" },
-        { title: "Fruits & Vegetables (PDF 2)", url: "/supplements/Module 6_1.pdf", type: "document" }
+        { title: "Eating Patterns: Fruits & Vegetables", url: "/supplements/Module 6_2.pdf", type: "document" },
+        { title: "Related Sustainable Diet Principles", url: "/supplements/Module 6_1.pdf", type: "document" }
       ]
     },
     {
@@ -216,7 +216,7 @@ const AppContent = () => {
         "Sustainable protein choice: Choose lower-impact option when eating out."
       ],
       supplements: [
-        { title: "Eating Patterns: Protein", url: "/supplements/Module 8.pdf", type: "document" }
+        { title: "Related Sustainable Diet Principles", url: "/supplements/Module 8.pdf", type: "document" }
       ]
     },
     {
@@ -238,8 +238,8 @@ const AppContent = () => {
         "Reduce packaging: Bring reusable items."
       ],
       supplements: [
-        { title: "Food Waste & Packaging (PDF 1)", url: "/supplements/Module 9_1.pdf", type: "document" },
-        { title: "Food Waste & Packaging (PDF 2)", url: "/supplements/Module 9_2.pdf", type: "document" }
+        { title: "Food Waste & Packaging", url: "/supplements/Module 9_1.pdf", type: "document" },
+        { title: "Related Sustainable Diet Principles", url: "/supplements/Module 9_2.pdf", type: "document" }
       ]
     },
     {
