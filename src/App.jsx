@@ -102,8 +102,9 @@ const AppContent = () => {
         "Feasibility check: Identify barriers and solutions."
       ],
       supplements: [
-        { title: "Buying Food Locally (Link)", url: "https://story.motherhood.com.my/blog/9-inexpensive-superfoods-you-might-find-in-your-malaysian-diet/", type: "link" },
-        { title: "Buying Food Locally (PDF)", url: "/supplements/Module 3.pdf", type: "document" }
+        { title: "9 Inexpensive Superfoods You Might Find in Your Malaysian Diet", url: "https://story.motherhood.com.my/blog/9-inexpensive-superfoods-you-might-find-in-your-malaysian-diet/", type: "link" },
+        { title: "Nutrition Guide (Image)", url: "/supplements/Module 3 supplement 1.png", type: "image" },
+        { title: "Nutrition Guide (PDF)", url: "/supplements/Module 3 supplement 2.pdf", type: "document" }
       ]
     },
     {
@@ -170,8 +171,8 @@ const AppContent = () => {
         "Simple plant-forward swap: Commit to one change for the week."
       ],
       supplements: [
-        { title: "Fruits & Vegetables (PDF 2)", url: "/supplements/Module 6_2.pdf", type: "document" },
-        { title: "Fruits & Vegetables (PDF 1)", url: "/supplements/Module 6_1.pdf", type: "document" }
+        { title: "Fruits & Vegetables (PDF 1)", url: "/supplements/Module 6_2.pdf", type: "document" },
+        { title: "Fruits & Vegetables (PDF 2)", url: "/supplements/Module 6_1.pdf", type: "document" }
       ]
     },
     {
@@ -569,10 +570,13 @@ const AppContent = () => {
                   <>
                     {/* 1. Show links first */}
                     {module.supplements.map((item, idx) => {
-                      const isPreviewed = ((module.id === 1 || module.id === 4 || module.id === 5 ||
-                        module.id === 6 || module.id === 7 || module.id === 8 ||
-                        module.id === 9 || module.id === 10) && item.type === 'document') ||
-                        (module.id === 2); // Hide all links for Module 2 since we use consolidated preview
+                      const isPreviewed = (item.type !== 'link' && (
+                        ((module.id === 1 || module.id === 3 || module.id === 4 || module.id === 5 ||
+                          module.id === 6 || module.id === 7 || module.id === 8 ||
+                          module.id === 9 || module.id === 10) && item.type === 'document') ||
+                        (module.id === 2) ||
+                        (module.id === 3 && item.type === 'image')
+                      ));
 
                       if (isPreviewed) return null;
 
@@ -594,22 +598,24 @@ const AppContent = () => {
 
                     {/* 2. Show Previews after links */}
 
-                    {/* Specific Preview for Module 1, 4, 5, 6, 7, 8, 9 & 10 (Documents) */}
-                    {(module.id === 1 || module.id === 4 || module.id === 5 || module.id === 6 ||
+                    {/* Specific Preview for Module 1, 3, 4, 5, 6, 7, 8, 9 & 10 (Individual Documents/Images) */}
+                    {(module.id === 1 || module.id === 3 || module.id === 4 || module.id === 5 || module.id === 6 ||
                       module.id === 7 || module.id === 8 || module.id === 9 || module.id === 10) && (
                         <div className="space-y-4 mt-4">
-                          {module.supplements.filter(i => i.type === 'document').map((item, idx) => (
-                            <SupplementPreview key={idx} url={item.url} title={item.title} />
+                          {module.supplements.filter(i =>
+                            i.type === 'document' || (module.id === 3 && i.type === 'image')
+                          ).map((item, idx) => (
+                            <SupplementPreview key={idx} url={item.url} title={item.title} type={item.type} />
                           ))}
                         </div>
                       )}
 
-                    {/* Specific Preview for Module 2 (All Items) */}
+                    {/* Specific Preview for Module 2 (Consolidated Gallery) */}
                     {module.id === 2 && (
                       <div className="space-y-4 mt-4">
                         <SupplementPreview
-                          title="Our Choices Matter"
-                          items={module.supplements}
+                          title={module.title}
+                          items={module.supplements.filter(i => i.type !== 'link')}
                         />
                       </div>
                     )}
