@@ -752,7 +752,7 @@ const AppContent = () => {
               {/* Main Circle */}
               <div className="relative w-full h-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/20 shadow-2xl ring-1 ring-white/30">
                 <div className="text-center transform transition-transform hover:scale-105 duration-500">
-                  <div className="text-7xl md:text-9xl font-bold text-[#D4E157] drop-shadow-[0_4px_4px_rgba(0,0,0,0.3)]">11</div>
+                  <div className="text-7xl md:text-9xl font-bold text-[#D4E157] drop-shadow-[0_4px_4px_rgba(0,0,0,0.3)]">12</div>
                   <div className="w-16 h-1 bg-white/50 mx-auto my-4 rounded-full"></div>
                   <p className="text-xl md:text-2xl font-light tracking-widest uppercase">Interactive<br /><span className="font-bold">Modules</span></p>
                 </div>
