@@ -282,10 +282,33 @@ const AppContent = () => {
         "Complete your pledge.",
         "Share your pledge with a friend."
       ],
-      supplements: [
-        { title: "Recipe Website", url: "https://www.smartcooking.com.my/recipes", type: "link" }
-      ],
       slug: "my-plate-my-pledge"
+    },
+    {
+      id: 12,
+      title: "Review",
+      description: "A comprehensive review of sustainable eating resources and guidelines.",
+      time: "10 mins",
+      type: "review",
+      image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&q=80&w=1200",
+      objectives: [
+        "Review key sustainable diet principles and guidelines.",
+        "Access additional resources for continuous learning.",
+        "Reflect on the journey through all previous modules."
+      ],
+      actionSteps: [
+        "Download and review the FAQ guide.",
+        "Explore the sustainability website for more tips.",
+        "Share your favorite takeaway with the community."
+      ],
+      supplements: [
+        { title: "FAQ", url: "/supplements/FAQ.pdf", type: "document" },
+        { title: "Meal-swaps", url: "/supplements/Meal-swaps.pdf", type: "document" },
+        { title: "SEL Guidelines for Sustainable Diets", url: "/supplements/SEL_Guidelines_SustainableDiets_Canteens_Workplaces_Universities.pdf", type: "document" },
+        { title: "SHE Reference Guide", url: "/supplements/SHE reference guide.pdf", type: "document" },
+        { title: "SHE Glossary", url: "/supplements/SHE-Glossary.pdf", type: "document" },
+        { title: "Sustainability UM", url: "https://sustainability.um.edu.my/healthy-and-sustainable-food-um", type: "link" }
+      ]
     }
   ];
 
@@ -549,8 +572,8 @@ const AppContent = () => {
               </ul>
             </div>
 
-            {/* Box 2: Video - Only show if NOT module 11 */}
-            {module.id !== 11 && (
+            {/* Box 2: Video - Only show if NOT module 11 or 12 */}
+            {module.id !== 11 && module.id !== 12 && (
               <div className="border-2 border-gray-800 rounded-lg p-6 md:p-8 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)] transition-shadow">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
                   <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800">2</span>
@@ -571,13 +594,10 @@ const AppContent = () => {
                   <>
                     {/* 1. Show links first */}
                     {module.supplements.map((item, idx) => {
-                      const isPreviewed = (item.type !== 'link' && (
-                        ((module.id === 1 || module.id === 3 || module.id === 4 || module.id === 5 ||
-                          module.id === 6 || module.id === 7 || module.id === 8 ||
-                          module.id === 9 || module.id === 10) && item.type === 'document') ||
-                        (module.id === 2) ||
-                        (module.id === 3 && item.type === 'image')
-                      ));
+                      const isPreviewed = ((module.id === 1 || module.id === 3 || module.id === 4 || module.id === 5 ||
+                        module.id === 6 || module.id === 7 || module.id === 8 ||
+                        module.id === 9 || module.id === 10) && item.type === 'document') ||
+                        (module.id === 2 || (module.id === 3 && item.type === 'image')); // Hide specific items that have consolidated previews
 
                       if (isPreviewed) return null;
 
