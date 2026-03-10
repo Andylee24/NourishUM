@@ -302,12 +302,18 @@ const AppContent = () => {
         "Share your favorite takeaway with the community."
       ],
       supplements: [
-        { title: "FAQ", url: "/supplements/FAQ.pdf", type: "document" },
-        { title: "Meal-swaps", url: "/supplements/Meal-swaps.pdf", type: "document" },
-        { title: "SEL Guidelines for Sustainable Diets", url: "/supplements/SEL_Guidelines_SustainableDiets_Canteens_Workplaces_Universities.pdf", type: "document" },
-        { title: "SHE Reference Guide", url: "/supplements/SHE reference guide.pdf", type: "document" },
-        { title: "SHE Glossary", url: "/supplements/SHE-Glossary.pdf", type: "document" },
-        { title: "Sustainability UM", url: "https://sustainability.um.edu.my/healthy-and-sustainable-food-um", type: "link" }
+        { title: "Built a Healthy Eating Routine", url: "/supplements/Built a Healthy Eating Routine.pdf", type: "document" },
+        { title: "Cut Down on Added Sugar", url: "/supplements/Cut Down on Added Sugar.pdf", type: "document" },
+        { title: "Eating Patterns for Health and Environment Sustainability", url: "/supplements/Eating Patterns for Health and Environment Sustainability.pdf", type: "document" },
+        { title: "Frequently Asked Questions with Sustainable Diet", url: "/supplements/Frequently Asked Questions with Sustainable Diet.pdf", type: "document" },
+        { title: "Glossary of Key Terms and Ideas with Sustainable Diet", url: "/supplements/Glossary of Key Terms and Ideas with Sustainable Diet.pdf", type: "document" },
+        { title: "Make Healthy Drink Choice", url: "/supplements/Make Healthy Drink Choice.pdf", type: "document" },
+        { title: "Making our favourite meals more Sustainable", url: "/supplements/Making our favourite meals more Sustainable.pdf", type: "document" },
+        { title: "Nutritionals per Single Serving", url: "/supplements/Nutritionals per Single Serving.pdf", type: "document" },
+        { title: "Sustainable Diets Guidelines", url: "/supplements/Sustainable Diets Guidelines.pdf", type: "document" },
+        { title: "Link for food image submitting", url: "https://docs.google.com/forms/d/e/1FAIpQLSdcF17wCjv80idWm1dBRlnJk8xhR5sNIXz4tOMNLEgRpZW6Yg/viewform", type: "link" },
+        { title: "Link for questionnaire (4-6 minutes)", url: "https://docs.google.com/forms/d/e/1FAIpQLSclOjvzQ0itKBtPvNmbNQN-4fWd4yeN0LIPjN4GVlMGvJNGKg/viewform?usp=publish-editor", type: "link" },
+        { title: "Healthy and Sustainable Food@UM", url: "https://sustainability.um.edu.my/healthy-and-sustainable-food-um", type: "link" }
       ]
     }
   ];
