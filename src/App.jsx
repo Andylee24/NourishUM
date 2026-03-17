@@ -149,6 +149,7 @@ const AppContent = () => {
       ],
       supplements: [
         { title: "Eating Healthy with the Malaysian Healthy Plate", url: "https://imu.edu.my/imunews/eating-healthy-with-the-malaysian-healthy-plate", type: "link" },
+        { title: "Examples of Malaysian Healthy Plate", url: "/supplements/Examples of Malaysian Healthy Plate.jpg", type: "image" },
         { title: "Related Sustainable Diet Principles", url: "/supplements/Module 5_2.pdf", type: "document" }
       ]
     },
@@ -181,8 +182,8 @@ const AppContent = () => {
       description: "Differentiate whole grains from refined carbohydrates and explain the benefits of choosing whole grains.",
       time: "3 mins",
       type: "video",
-      videoId: "8USo-0w9QjE",
-      image: "https://img.youtube.com/vi/8USo-0w9QjE/maxresdefault.jpg",
+      videoId: "FpFywczIeVM",
+      image: "https://img.youtube.com/vi/FpFywczIeVM/maxresdefault.jpg",
       objectives: [
         "Differentiate whole grains from refined carbohydrates.",
         "Explain health and sustainability benefits of whole grains.",
@@ -302,6 +303,7 @@ const AppContent = () => {
         "Share your favorite takeaway with the community."
       ],
       supplements: [
+        { title: "Album Makanan Malaysia", url: "/supplements/Album Makanan Malaysia.pdf", type: "document" },
         { title: "Built a Healthy Eating Routine", url: "/supplements/Built a Healthy Eating Routine.pdf", type: "document" },
         { title: "Cut Down on Added Sugar", url: "/supplements/Cut Down on Added Sugar.pdf", type: "document" },
         { title: "Eating Patterns for Health and Environment Sustainability", url: "/supplements/Eating Patterns for Health and Environment Sustainability.pdf", type: "document" },
@@ -310,15 +312,7 @@ const AppContent = () => {
         { title: "Make Healthy Drink Choice", url: "/supplements/Make Healthy Drink Choice.pdf", type: "document" },
         { title: "Making our favourite meals more Sustainable", url: "/supplements/Making our favourite meals more Sustainable.pdf", type: "document" },
         { title: "Nutritionals per Single Serving", url: "/supplements/Nutritionals per Single Serving.pdf", type: "document" },
-        { title: "Sustainable Diets Guidelines", url: "/supplements/Sustainable Diets Guidelines.pdf", type: "document" },
-        { title: "FAQ", url: "/supplements/FAQ.pdf", type: "document" },
-        { title: "Meal-swaps", url: "/supplements/Meal-swaps.pdf", type: "document" },
-        { title: "SEL Guidelines for Sustainable Diets (Full)", url: "/supplements/SEL_Guidelines_SustainableDiets_Canteens_Workplaces_Universities.pdf", type: "document" },
-        { title: "SHE Reference Guide (Alternative)", url: "/supplements/SHE reference guide.pdf", type: "document" },
-        { title: "SHE Glossary (Alternative)", url: "/supplements/SHE-Glossary.pdf", type: "document" },
-        { title: "Link for food image submitting", url: "https://docs.google.com/forms/d/e/1FAIpQLSdcF17wCjv80idWm1dBRlnJk8xhR5sNIXz4tOMNLEgRpZW6Yg/viewform", type: "link" },
-        { title: "Link for questionnaire (4-6 minutes)", url: "https://docs.google.com/forms/d/e/1FAIpQLSclOjvzQ0itKBtPvNmbNQN-4fWd4yeN0LIPjN4GVlMGvJNGKg/viewform?usp=publish-editor", type: "link" },
-        { title: "Healthy and Sustainable Food@UM", url: "https://sustainability.um.edu.my/healthy-and-sustainable-food-um", type: "link" }
+        { title: "Sustainable Diets Guidelines", url: "/supplements/Sustainable Diets Guidelines.pdf", type: "document" }
       ]
     }
   ];
@@ -365,7 +359,228 @@ const AppContent = () => {
     navigate('/');
   };
 
+  const handleDownloadCertificate = () => {
+    const userName = user?.name || "Participant";
+    const dateStr = new Date().toLocaleDateString('en-MY', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      alert("Please allow pop-ups to download your certificate.");
+      return;
+    }
+
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>NourishUM Certificate of Commitment</title>
+          <style>
+            @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;700&display=swap');
+            
+            body { 
+              font-family: 'Inter', sans-serif; 
+              text-align: center; 
+              background-color: #f0f4c3; 
+              margin: 0;
+              display: flex;
+              justify-content: center;
+              padding: 2rem;
+              min-height: 100vh;
+              align-items: center;
+            }
+            .certificate-wrapper {
+              background-color: white;
+              padding: 40px;
+              box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+              max-width: 900px;
+              width: 100%;
+              position: relative;
+            }
+            .certificate-border {
+              border: 12px solid #D4E157;
+              padding: 60px 40px;
+              position: relative;
+            }
+            .inner-border {
+              position: absolute;
+              top: 10px; left: 10px; right: 10px; bottom: 10px;
+              border: 2px solid #827717;
+            }
+            .logo-icon {
+              font-size: 48px;
+              margin-bottom: 20px;
+            }
+            h1 { 
+              font-family: 'Playfair Display', serif;
+              color: #827717; 
+              font-size: 54px; 
+              margin: 0 0 10px 0;
+              text-transform: uppercase;
+              letter-spacing: 2px;
+            }
+            h2 { 
+              color: #333; 
+              font-size: 24px; 
+              margin-top: 0;
+              font-weight: 300;
+              letter-spacing: 4px;
+              text-transform: uppercase;
+              margin-bottom: 40px;
+            }
+            p { 
+              font-size: 20px; 
+              color: #555; 
+              line-height: 1.6; 
+              margin: 0;
+            }
+            .name { 
+              font-family: 'Playfair Display', serif;
+              font-size: 48px; 
+              font-weight: 700; 
+              color: #2c3e50; 
+              margin: 30px 0; 
+              border-bottom: 2px solid #D4E157; 
+              display: inline-block; 
+              padding-bottom: 5px; 
+              min-width: 400px;
+            }
+            .reason {
+              font-size: 22px;
+              max-width: 600px;
+              margin: 0 auto;
+              color: #666;
+            }
+            .signature-area { 
+              margin-top: 80px; 
+              display: flex; 
+              justify-content: space-around; 
+            }
+            .signature-block {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+            }
+            .signature-line { 
+              border-top: 2px solid #333; 
+              width: 250px; 
+              padding-top: 10px; 
+              color: #333; 
+              font-weight: 600;
+              text-transform: uppercase;
+              font-size: 14px;
+              letter-spacing: 1px;
+            }
+            .date-val { 
+              font-family: 'Playfair Display', serif;
+              font-size: 24px; 
+              margin-bottom: 5px;
+              color: #333;
+            }
+            
+            @media print {
+              @page { size: landscape; margin: 0; }
+              body { background-color: white; padding: 0; display: block;}
+              .certificate-wrapper { box-shadow: none; padding: 2cm; max-width: 100%; height: 100vh; box-sizing: border-box;}
+            }
+            
+            .print-btn {
+              position: fixed;
+              top: 20px;
+              right: 20px;
+              background: #827717;
+              color: white;
+              border: none;
+              padding: 10px 20px;
+              font-size: 16px;
+              border-radius: 5px;
+              cursor: pointer;
+              font-family: 'Inter', sans-serif;
+              font-weight: bold;
+              box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+              z-index: 100;
+            }
+            @media print {
+              .print-btn { display: none; }
+            }
+          </style>
+        </head>
+        <body>
+          <button class="print-btn" onclick="window.print()">Print / Save PDF</button>
+          <div class="certificate-wrapper">
+            <div class="certificate-border">
+              <div class="inner-border"></div>
+              <div class="logo-icon">🌱</div>
+              <h1>Certificate of Commitment</h1>
+              <h2>NourishUM Sustainable Diet Program</h2>
+              
+              <p style="margin-top: 40px; font-style: italic;">This is to certify that</p>
+              
+              <div class="name">${userName}</div>
+              
+              <div class="reason">
+                has successfully completed the NourishUM modules and has pledged to lead and promote sustainable food habits for personal health and environmental sustainability.
+              </div>
+              
+              <div class="signature-area">
+                <div class="signature-block">
+                  <div class="date-val">${dateStr}</div>
+                  <div class="signature-line">Date</div>
+                </div>
+                <div class="signature-block">
+                  <div class="date-val" style="font-style: italic; color: #827717;">NourishUM Team</div>
+                  <div class="signature-line">Program Organizers</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+
+    // Automatically trigger print dialog after fonts load
+    setTimeout(() => {
+      printWindow.focus();
+      printWindow.print();
+    }, 1000);
+  };
+
   // --- Sub-Components ---
+
+  const ResourcesView = () => (
+    <div className="flex-grow bg-[#F9FBE7] py-16 px-4">
+      <div className="container mx-auto max-w-4xl">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 font-handwriting">Resources</h1>
+          <div className="h-1 w-24 bg-[#D4E157] mx-auto rounded-full mb-6"></div>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Explore our curated list of materials and external links to help you build and maintain a sustainable diet.
+          </p>
+        </div>
+
+        <div className="space-y-6">
+          {[
+            { title: "sustainable diet recipe", url: "/supplements/sustainable diet recipe.pdf", type: "document" },
+            { title: "Link for questionnaire (4-6 minutes)", url: "https://docs.google.com/forms/d/e/1FAIpQLSclOjvzQ0itKBtPvNmbNQN-4fWd4yeN0LIPjN4GVlMGvJNGKg/viewform?usp=publish-editor", type: "link" },
+            { title: "Healthy and Sustainable Food@UM", url: "https://sustainability.um.edu.my/healthy-and-sustainable-food-um", type: "link" }
+          ].map((item, idx) => (
+            <a
+              key={idx}
+              href={item.url}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center p-6 rounded-2xl border border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm transition-all group cursor-pointer"
+            >
+              <div className="bg-gray-50 p-4 rounded-xl mr-6 border border-gray-100">
+                <ExternalLink size={28} className="text-gray-500" />
+              </div>
+              <span className="text-xl justify-center font-medium text-gray-700">{item.title}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
 
   const AuthView = ({ type }) => (
     <div className="flex-grow bg-[#F0F4C3] flex items-center justify-center py-12 px-4">
@@ -567,21 +782,30 @@ const AppContent = () => {
           </div>
 
           <div className="space-y-8">
-            {/* Box 1: What will you learn? (Objectives) */}
-            <div className="border-2 border-gray-800 rounded-lg p-6 md:p-8 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)] transition-shadow">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800">1</span>
-                What will you learn?
-              </h2>
-              <ul className="space-y-3 pl-3">
-                {module.objectives.map((obj, idx) => (
-                  <li key={idx} className="flex items-start text-gray-700 text-lg">
-                    <span className="mr-3 text-[#827717] font-bold">•</span>
-                    <span>{obj}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {/* Box 1: What will you learn? (Objectives) or Pledge Input */}
+            {module.id !== 12 && (
+              <div className="border-2 border-gray-800 rounded-lg p-6 md:p-8 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)] transition-shadow">
+                <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                  <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800">1</span>
+                  {module.id === 11 ? "What Actions will You Pledge to Take?" : "What will you learn?"}
+                </h2>
+                {module.id === 11 ? (
+                  <textarea
+                    className="w-full h-32 p-4 border-2 border-dashed border-gray-300 rounded-lg focus:border-[#D4E157] focus:ring-0 active:outline-none resize-none font-sans text-gray-700 placeholder-gray-400"
+                    placeholder="Share your pledge here..."
+                  ></textarea>
+                ) : (
+                  <ul className="space-y-3 pl-3">
+                    {module.objectives.map((obj, idx) => (
+                      <li key={idx} className="flex items-start text-gray-700 text-lg">
+                        <span className="mr-3 text-[#827717] font-bold">•</span>
+                        <span>{obj}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
 
             {/* Box 2: Video - Only show if NOT module 11 or 12 */}
             {module.id !== 11 && module.id !== 12 && (
@@ -594,103 +818,167 @@ const AppContent = () => {
               </div>
             )}
 
-            {/* Box 3: Factsheet / Supplements */}
+            {/* Box 3: Factsheet / Supplements or Pledge List */}
             <div className="border-2 border-gray-800 rounded-lg p-6 md:p-8 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)] transition-shadow">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800">{module.id === 11 ? 2 : 3}</span>
-                Supplements
+              <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-start">
+                {module.id !== 12 && (
+                  <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800 flex-shrink-0 mt-1">{module.id === 11 ? 2 : 3}</span>
+                )}
+                {module.id === 11 ? (
+                  <span className="text-xl leading-relaxed">Read the list of actions you can take to lead and promote sustainable food habits. Which ones will you pledge? Check the boxes next to your pledges before downloading your certificate!</span>
+                ) : (
+                  <span>Supplements</span>
+                )}
               </h2>
-              <div className="grid gap-3">
-                {module.supplements && module.supplements.length > 0 ? (
-                  <>
-                    {/* 1. Show links first */}
-                    {module.supplements.map((item, idx) => {
-                      const isPreviewed = ((module.id === 1 || module.id === 3 || module.id === 4 || module.id === 5 ||
-                        module.id === 6 || module.id === 7 || module.id === 8 ||
-                        module.id === 9 || module.id === 10) && item.type === 'document') ||
-                        (module.id === 2 || (module.id === 3 && item.type === 'image')); // Hide specific items that have consolidated previews
 
-                      if (isPreviewed) return null;
+              {module.id === 11 ? (
+                <div className="space-y-4">
+                  {[
+                    "Opt for foods that have a lower climate footprint and try to reduce my meat consumption.",
+                    "Look for foods that show that the environment, workers, and local communities were respected in the food production.",
+                    "Choose local and seasonal food whenever available; buy frozen / canned food is local and seasonal is not available.",
+                    "Consult the labels to ensure I am buying nutritious and varied foods, in line with dietary guidelines.",
+                    "Choose whole grain instead of white flour, eat less sugar, fat, and salt, avoid overeating, and drink more water.",
+                    "Eat more fruits and vegetables and try to swap animal protein for plant-based ones.",
+                    "Cook more at home, use local ingredients and test traditional recipes and methods.",
+                    "Shop only what I need, pay attention to expiration dates, opt for smaller portions, use all parts of food products, and compost. This way I will reduce my food waste.",
+                    "Reduce food-related packaging by refusing plastic straws and cutlery and using my own food containers, bottles, and shopping bag.",
+                    "I will sort my waste and dispose of recyclable materials in designated containers.",
+                    "Educate my family, friends, and co-workers about the benefits of having a sustainable diet and our role as consumers.",
+                    "Deepen my understanding on the link between food, health and the planet and try to invent new solutions myself"
+                  ].map((pledge, idx) => (
+                    <div key={idx} className="flex items-start group mb-8 pl-2">
+                      <input
+                        type="checkbox"
+                        id={`pledge-${idx}`}
+                        className="mt-1 mr-5 w-6 h-6 flex-shrink-0 rounded bg-white border-2 border-gray-300 text-blue-500 focus:ring-blue-500 focus:ring-opacity-50 cursor-pointer transition-colors duration-200 shadow-sm"
+                      />
+                      <label
+                        htmlFor={`pledge-${idx}`}
+                        className="text-[1.1rem] text-gray-700 cursor-pointer group-hover:text-gray-900 leading-relaxed block w-full pt-px"
+                      >
+                        {pledge}
+                      </label>
+                    </div>
+                  ))}
 
-                      return (
-                        <div key={idx} className="mb-4 last:mb-0">
-                          <a
-                            href={item.url || "#"}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="flex items-center p-4 rounded border-2 border-dashed border-gray-300 hover:border-[#D4E157] hover:bg-[#F9FBE7] transition group cursor-pointer"
-                          >
-                            {item.type === 'link' ? <ExternalLink size={24} className="text-gray-400 group-hover:text-[#827717] mr-4" /> : <FileText size={24} className="text-gray-400 group-hover:text-[#827717] mr-4" />}
-                            <span className="text-lg font-medium text-gray-700 group-hover:text-gray-900">{item.title}</span>
-                            <ExternalLink size={16} className="ml-auto opacity-0 group-hover:opacity-50" />
-                          </a>
-                        </div>
-                      );
-                    })}
+                  <div className="mt-8 pt-6 border-t border-gray-100">
+                    <label className="block text-xl font-bold text-gray-800 mb-4 flex items-center">
+                      <span className="bg-[#D4E157] w-2 h-6 mr-3 rounded-full"></span>
+                      Anything else you pledge to do?
+                    </label>
+                    <textarea
+                      className="w-full h-24 p-4 border-2 border-dashed border-gray-300 rounded-lg focus:border-[#D4E157] hover:border-[#D4E157] focus:ring-0 active:outline-none resize-none font-sans text-gray-700 placeholder-gray-400 transition-colors"
+                      placeholder="Type your additional pledges here..."
+                    ></textarea>
+                  </div>
 
-                    {/* 2. Show Previews after links */}
+                  <div className="mt-8 pt-6 border-t border-gray-100 flex justify-center">
+                    <button onClick={handleDownloadCertificate} className="bg-[#D4E157] hover:bg-[#c0ca33] text-gray-900 font-bold py-4 px-10 rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-1 flex items-center border border-gray-800">
+                      <Award className="mr-2" size={24} />
+                      Download Certificate
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="grid gap-3">
+                  {module.supplements && module.supplements.length > 0 ? (
+                    <>
+                      {/* 1. Show links first */}
+                      {module.supplements.map((item, idx) => {
+                        const isPreviewed = ((module.id === 1 || module.id === 3 || module.id === 4 || module.id === 5 ||
+                          module.id === 6 || module.id === 7 || module.id === 8 ||
+                          module.id === 9 || module.id === 10) && item.type === 'document') ||
+                          (module.id === 2 || ((module.id === 3 || module.id === 5) && item.type === 'image')); // Hide specific items that have consolidated previews
 
-                    {/* Specific Preview for Module 1, 3, 4, 5, 6, 7, 8, 9 & 10 (Individual Documents/Images) */}
-                    {(module.id === 1 || module.id === 3 || module.id === 4 || module.id === 5 || module.id === 6 ||
-                      module.id === 7 || module.id === 8 || module.id === 9 || module.id === 10) && (
+                        if (isPreviewed) return null;
+
+                        return (
+                          <div key={idx} className="mb-4 last:mb-0">
+                            <a
+                              href={item.url || "#"}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="flex items-center p-5 rounded-xl border border-gray-200 bg-white hover:border-[#D4E157] hover:shadow-md hover:-translate-y-0.5 transition-all group cursor-pointer"
+                            >
+                              <div className="bg-gray-50 p-3 rounded-lg mr-5 group-hover:bg-[#F0F4C3] transition-colors border border-gray-100 group-hover:border-[#D4E157]">
+                                {item.type === 'link' ? <ExternalLink size={24} className="text-gray-500 group-hover:text-[#827717]" /> : <FileText size={24} className="text-gray-500 group-hover:text-[#827717]" />}
+                              </div>
+                              <span className="text-[1.1rem] font-medium text-gray-700 group-hover:text-gray-900">{item.title}</span>
+                              <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity bg-gray-50 p-2 rounded-full group-hover:bg-[#F0F4C3]">
+                                <ExternalLink size={18} className="text-gray-400 group-hover:text-[#827717]" />
+                              </div>
+                            </a>
+                          </div>
+                        );
+                      })}
+
+                      {/* 2. Show Previews after links */}
+
+                      {/* Specific Preview for Module 1, 3, 4, 5, 6, 7, 8, 9 & 10 (Individual Documents/Images) */}
+                      {(module.id === 1 || module.id === 3 || module.id === 4 || module.id === 5 || module.id === 6 ||
+                        module.id === 7 || module.id === 8 || module.id === 9 || module.id === 10) && (
+                          <div className="space-y-4 mt-4">
+                            {module.supplements.filter(i =>
+                              i.type === 'document' || ((module.id === 3 || module.id === 5) && i.type === 'image')
+                            ).map((item, idx) => (
+                              <SupplementPreview key={idx} url={item.url} title={item.title} type={item.type} />
+                            ))}
+                          </div>
+                        )}
+
+                      {/* Specific Preview for Module 2 (Consolidated Gallery) */}
+                      {module.id === 2 && (
                         <div className="space-y-4 mt-4">
-                          {module.supplements.filter(i =>
-                            i.type === 'document' || (module.id === 3 && i.type === 'image')
-                          ).map((item, idx) => (
-                            <SupplementPreview key={idx} url={item.url} title={item.title} type={item.type} />
-                          ))}
+                          <SupplementPreview
+                            title={module.title}
+                            items={module.supplements.filter(i => i.type !== 'link')}
+                          />
                         </div>
                       )}
-
-                    {/* Specific Preview for Module 2 (Consolidated Gallery) */}
-                    {module.id === 2 && (
-                      <div className="space-y-4 mt-4">
-                        <SupplementPreview
-                          title={module.title}
-                          items={module.supplements.filter(i => i.type !== 'link')}
-                        />
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <p className="text-gray-500 italic p-4 border-2 border-dashed border-gray-200 rounded">No factsheet available for this module yet.</p>
-                )}
-              </div>
+                    </>
+                  ) : (
+                    <p className="text-gray-500 italic p-4 border-2 border-dashed border-gray-200 rounded">No factsheet available for this module yet.</p>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Box 4: Action Steps */}
-            <div className="border-2 border-gray-800 rounded-lg p-6 md:p-8 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)] transition-shadow relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-4 opacity-10">
-                <CheckSquare size={100} />
-              </div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center relative z-10">
-                <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800">{module.id === 11 ? 3 : 4}</span>
-                Action steps:
-              </h2>
-              <div className="space-y-4 relative z-10">
-                {module.actionSteps.map((step, idx) => {
-                  const isCompleted = completedActions[module.id]?.[idx];
-                  return (
-                    <div
-                      key={idx}
-                      className={`p-4 rounded border-2 transition-all cursor-pointer flex items-start ${isCompleted ? 'bg-[#F0F4C3] border-[#827717]' : 'bg-white border-gray-200 hover:border-gray-400'}`}
-                      onClick={() => toggleAction(module.id, idx)}
-                    >
-                      <div className={`w-6 h-6 border-2 rounded mr-4 mt-0.5 flex-shrink-0 flex items-center justify-center transition-colors ${isCompleted ? 'bg-[#827717] border-[#827717]' : 'border-gray-400 bg-white'}`}>
-                        {isCompleted && <CheckCircle size={14} className="text-white" />}
+            {module.id !== 12 && (
+              <div className="border-2 border-gray-800 rounded-lg p-6 md:p-8 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)] transition-shadow relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-4 opacity-10">
+                  <CheckSquare size={100} />
+                </div>
+                <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center relative z-10">
+                  <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800">{module.id === 11 ? 3 : 4}</span>
+                  Action steps:
+                </h2>
+                <div className="space-y-4 relative z-10">
+                  {module.actionSteps.map((step, idx) => {
+                    const isCompleted = completedActions[module.id]?.[idx];
+                    return (
+                      <div
+                        key={idx}
+                        className={`p-4 rounded border-2 transition-all cursor-pointer flex items-start ${isCompleted ? 'bg-[#F0F4C3] border-[#827717]' : 'bg-white border-gray-200 hover:border-gray-400'}`}
+                        onClick={() => toggleAction(module.id, idx)}
+                      >
+                        <div className={`w-6 h-6 border-2 rounded mr-4 mt-0.5 flex-shrink-0 flex items-center justify-center transition-colors ${isCompleted ? 'bg-[#827717] border-[#827717]' : 'border-gray-400 bg-white'}`}>
+                          {isCompleted && <CheckCircle size={14} className="text-white" />}
+                        </div>
+                        <p className={`text-lg ${isCompleted ? 'text-gray-600 line-through' : 'text-gray-800'}`}>{step}</p>
                       </div>
-                      <p className={`text-lg ${isCompleted ? 'text-gray-600 line-through' : 'text-gray-800'}`}>{step}</p>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
-                <span className="text-sm text-gray-500 font-medium">Progress: {Math.round(progress)}%</span>
-                <div className="w-1/3 bg-gray-200 rounded-full h-2">
-                  <div className="bg-[#827717] h-2 rounded-full transition-all duration-500" style={{ width: `${progress}%` }}></div>
+                    );
+                  })}
+                </div>
+                <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                  <span className="text-sm text-gray-500 font-medium">Progress: {Math.round(progress)}%</span>
+                  <div className="w-1/3 bg-gray-200 rounded-full h-2">
+                    <div className="bg-[#827717] h-2 rounded-full transition-all duration-500" style={{ width: `${progress}%` }}></div>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Footer Navigation */}
@@ -854,7 +1142,7 @@ const AppContent = () => {
 
           <nav className="hidden md:flex items-center space-x-8 font-semibold">
             <Link to="/" className={`hover:bg-white/20 px-3 py-1 rounded transition-colors ${location.pathname === '/' ? 'bg-white/20' : ''}`}>Curriculum</Link>
-            <button className="hover:bg-white/20 px-3 py-1 rounded transition-colors">Resources</button>
+            <Link to="/resources" className={`hover:bg-white/20 px-3 py-1 rounded transition-colors ${location.pathname === '/resources' ? 'bg-white/20' : ''}`}>Resources</Link>
 
             {user ? (
               <div className="flex items-center space-x-4 pl-4 border-l border-gray-600/20">
@@ -881,6 +1169,7 @@ const AppContent = () => {
         {isMenuOpen && (
           <div className="md:hidden bg-[#c0ca33] px-4 py-4 space-y-4 shadow-inner">
             <Link to="/" onClick={() => setIsMenuOpen(false)} className="block hover:text-white w-full text-left font-medium">Curriculum</Link>
+            <Link to="/resources" onClick={() => setIsMenuOpen(false)} className="block hover:text-white w-full text-left font-medium">Resources</Link>
             {user ? (
               <button onClick={handleLogout} className="w-full bg-gray-800 text-white px-5 py-3 rounded-lg font-bold">Logout</button>
             ) : (
@@ -893,6 +1182,7 @@ const AppContent = () => {
       <main className="flex-grow flex flex-col">
         <Routes>
           <Route path="/" element={<HomeView />} />
+          <Route path="/resources" element={<ResourcesView />} />
           <Route path="/login" element={<AuthView type="login" />} />
           <Route path="/signup" element={<AuthView type="signup" />} />
           <Route path="/modules/:slug" element={<ModuleDetailView />} />
