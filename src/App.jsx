@@ -1010,31 +1010,37 @@ const AppContent = () => {
 
   const HomeView = () => (
     <>
-      <section className="relative text-white overflow-hidden min-h-[600px] flex items-center">
-        {/* Background Image with Overlay */}
+      <section className="relative text-white overflow-hidden min-h-[1050px] md:min-h-[1100px]">
+        {/* Background image - centered to show full scene including people */}
         <div className="absolute inset-0 z-0">
-          <img src={heroBg} alt="Background" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#5C6BC0]/90 to-[#7986CB]/40 mix-blend-multiply"></div>
-          <div className="absolute inset-0 bg-black/10"></div>
+          <img
+            src={heroBg}
+            alt="Background"
+            className="w-full h-full object-cover"
+            style={{ objectPosition: 'center 35%' }}
+          />
+          {/* Left-side gradient for text readability over Petronas towers area */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-black/10 to-transparent" />
         </div>
 
-        <div className="container mx-auto px-4 py-16 md:py-24 flex flex-col md:flex-row items-center relative z-10">
-          <div className="w-full md:w-1/2 space-y-8 animate-fade-in-up">
+        {/* Text on LEFT side (Petronas towers / sky area) */}
+        <div className="absolute inset-0 flex items-center z-10">
+          <div className="w-full md:w-1/2 px-8 md:px-14 space-y-5">
             <div className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/30 shadow-lg">
               <span className="w-2 h-2 rounded-full bg-[#D4E157] animate-pulse"></span>
-              <span className="text-sm font-semibold tracking-wide uppercase text-[#F0F4C3]">Sustainable Diet Program</span>
+              <span className="text-sm font-semibold tracking-wide uppercase text-white">Sustainable Diet Program</span>
             </div>
 
-            <h2 className="text-5xl md:text-7xl font-extralight leading-tight tracking-tight">
-              Nourish Your Body.<br />
-              <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#D4E157] to-[#AED581] drop-shadow-sm">Heal The Planet.</span>
+            <h2 className="text-4xl md:text-6xl font-bold leading-tight tracking-tight text-white drop-shadow-2xl">
+              Nourish Your Body<br />
+              <span className="text-[#D4E157]">Heal The Planet</span>
             </h2>
 
-            <p className="text-xl md:text-2xl text-indigo-50 max-w-lg font-light leading-relaxed border-l-4 border-[#D4E157] pl-6">
+            <p className="text-lg text-white font-medium leading-relaxed drop-shadow-lg border-l-4 border-[#D4E157] pl-4 max-w-sm">
               Empowering UM students with knowledge for a sustainable lifestyle. Join the movement today.
             </p>
 
-            <div className="pt-4 flex flex-wrap gap-4">
+            <div className="pt-2">
               <button
                 onClick={() => document.getElementById('modules').scrollIntoView({ behavior: 'smooth' })}
                 className="bg-[#D4E157] text-gray-900 font-bold px-8 py-4 rounded-full hover:bg-white hover:scale-105 transition-all duration-300 shadow-xl flex items-center group"
@@ -1044,38 +1050,11 @@ const AppContent = () => {
               </button>
             </div>
           </div>
-
-          <div className="w-full md:w-1/2 mt-16 md:mt-0 flex justify-center perspective-1000">
-            <div className="relative w-72 h-72 md:w-[450px] md:h-[450px] transform hover:rotate-y-6 transition-transform duration-700">
-              {/* Outer Glow */}
-              <div className="absolute inset-0 bg-[#D4E157]/30 rounded-full blur-3xl animate-pulse"></div>
-
-              {/* Main Circle */}
-              <div className="relative w-full h-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/20 shadow-2xl ring-1 ring-white/30">
-                <div className="text-center transform transition-transform hover:scale-105 duration-500">
-                  <div className="text-7xl md:text-9xl font-bold text-[#D4E157] drop-shadow-[0_4px_4px_rgba(0,0,0,0.3)]">12</div>
-                  <div className="w-16 h-1 bg-white/50 mx-auto my-4 rounded-full"></div>
-                  <p className="text-xl md:text-2xl font-light tracking-widest uppercase">Interactive<br /><span className="font-bold">Modules</span></p>
-                </div>
-              </div>
-
-              {/* Floating Elements decoration */}
-              <div className="absolute -top-4 -right-4 w-20 h-20 bg-[#D4E157] rounded-full flex items-center justify-center text-3xl shadow-lg animate-bounce delay-700">🌱</div>
-              <div className="absolute bottom-8 -left-8 w-16 h-16 bg-white rounded-full flex items-center justify-center text-2xl shadow-lg animate-bounce delay-1000">🍎</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Scroll Down Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer opacity-80 hover:opacity-100" onClick={() => document.getElementById('modules').scrollIntoView({ behavior: 'smooth' })}>
-          <div className="w-8 h-12 border-2 border-white/50 rounded-full flex justify-center p-2 backdrop-blur-sm">
-            <div className="w-1 h-3 bg-white rounded-full animate-scroll"></div>
-          </div>
         </div>
       </section>
 
-      <section id="modules" className="bg-[#f8f9fa] py-20 px-4 flex-grow relative">
-        <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-gray-100 to-transparent opacity-50"></div>
+      <section id="modules" className="bg-[#f8f9fa] pt-10 pb-20 px-4 flex-grow relative">
+        <div className="absolute top-0 left-0 w-full h-10 bg-gradient-to-b from-gray-100 to-transparent opacity-50"></div>
         <div className="container mx-auto relative z-10">
           <div className="text-center mb-16 space-y-4">
             <span className="text-[#827717] font-bold tracking-wider uppercase text-sm bg-[#F0F4C3] px-3 py-1 rounded-full">Curriculum</span>
