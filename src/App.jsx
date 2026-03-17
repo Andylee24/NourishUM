@@ -561,7 +561,8 @@ const AppContent = () => {
         <div className="space-y-6">
           {[
             { title: "Sustainable diet recipe", url: "/supplements/sustainable diet recipe.pdf", type: "document" },
-            { title: "Link for questionnaire (4-6 minutes)", url: "https://docs.google.com/forms/d/e/1FAIpQLSclOjvzQ0itKBtPvNmbNQN-4fWd4yeN0LIPjN4GVlMGvJNGKg/viewform?usp=publish-editor", type: "link" },
+            { title: "Sustainable Food@UM", url: "https://sustainability.um.edu.my/healthy-and-sustainable-food-um", type: "link" },
+            { title: "Link for questionnaire (4-6 minutes)", url: "https://docs.google.com/forms/d/e/1FAIpQLSctqUuTHVofFWiRGZVWoJQXuIgipANhYjXwEPMgVASCXczsww/viewform", type: "link" },
             { title: "Link for food image submitting", url: "https://docs.google.com/forms/d/e/1FAIpQLSdcF17wCjv80idWm1dBRlnJk8xhR5sNIXz4tOMNLEgRpZW6Yg/viewform?usp=publish-editor", type: "link" }
           ].map((item, idx) => (
             <a
