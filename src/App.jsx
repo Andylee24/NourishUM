@@ -312,7 +312,8 @@ const AppContent = () => {
         { title: "Make Healthy Drink Choice", url: "/supplements/Make Healthy Drink Choice.pdf", type: "document" },
         { title: "Making our favourite meals more Sustainable", url: "/supplements/Making our favourite meals more Sustainable.pdf", type: "document" },
         { title: "Nutritionals per Single Serving", url: "/supplements/Nutritionals per Single Serving.pdf", type: "document" },
-        { title: "Sustainable Diets Guidelines", url: "/supplements/Sustainable Diets Guidelines.pdf", type: "document" }
+        { title: "Sustainable Diets Guidelines", url: "/supplements/Sustainable Diets Guidelines.pdf", type: "document" },
+        { title: "Healthy and Sustainable Food@UM", url: "https://sustainability.um.edu.my/healthy-and-sustainable-food-um", type: "link" }
       ]
     }
   ];
