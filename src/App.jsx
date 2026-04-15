@@ -53,7 +53,9 @@ const AppContent = () => {
         "Reflection prompt: Write down why this principle matters for your health or the environment."
       ],
       supplements: [
-        { title: "What is a Sustainable Diet?", url: "/supplements/Module 1.pdf", type: "document" }
+        { title: "What is a Sustainable Diet", url: "/new_supplements/Module%201-1.png", type: "image" },
+        { title: "What is a Sustainable Diet", url: "/new_supplements/Module%201-2.png", type: "image" },
+        { title: "What is a Sustainable Diet", url: "/new_supplements/Module%201-3.png", type: "image" }
       ]
     },
     {
@@ -76,10 +78,10 @@ const AppContent = () => {
         "Key takeaway identification: Write down one key message that changed your thinking."
       ],
       supplements: [
-        { title: "Environmental Impact 1", url: "/supplements/Module 2 pic 1.webp", type: "image" },
-        { title: "Environmental Impact 2", url: "/supplements/Module 2 pic 2.webp", type: "image" },
-        { title: "Environmental Impact 3", url: "/supplements/Module 2 pic 3.jpeg", type: "image" },
-        { title: "Environmental Impact 4", url: "/supplements/Module 2 pic 4.jpeg", type: "image" }
+        { title: "Our Choices Matter", url: "/new_supplements/Module%202-1.png", type: "image" },
+        { title: "Our Choices Matter", url: "/new_supplements/Module%202-2.png", type: "image" },
+        { title: "Our Choices Matter", url: "/new_supplements/Module%202-3.png", type: "image" },
+        { title: "Our Choices Matter", url: "/new_supplements/Module%202-4.png", type: "image" }
       ]
     },
     {
@@ -102,9 +104,8 @@ const AppContent = () => {
         "Feasibility check: Identify barriers and solutions."
       ],
       supplements: [
-        { title: "9 Inexpensive Superfoods You Might Find in Your Malaysian Diet", url: "https://story.motherhood.com.my/blog/9-inexpensive-superfoods-you-might-find-in-your-malaysian-diet/", type: "link" },
-        { title: "Buying Food Locally", url: "/supplements/Module 3 supplement 1.png", type: "image" },
-        { title: "Related Sustainable Diet Principles", url: "/supplements/Module 3 supplement 2.pdf", type: "document" }
+        { title: "Buying Food Locally", url: "/new_supplements/Module%203-1.png", type: "image" },
+        { title: "Buying Food Locally", url: "/new_supplements/Module%203-2.png", type: "image" }
       ]
     },
     {
@@ -126,7 +127,7 @@ const AppContent = () => {
         "Real-life application: Identify one small change for next shopping trip."
       ],
       supplements: [
-        { title: "Reading Labels", url: "/supplements/Module 4.pdf", type: "document" }
+        { title: "Visual Guide", url: "/new_supplements/Module%204.png", type: "image" }
       ]
     },
     {
@@ -148,9 +149,8 @@ const AppContent = () => {
         "Real-life commitment: Set a goal for your next meal."
       ],
       supplements: [
-        { title: "Eating Healthy with the Malaysian Healthy Plate", url: "https://imu.edu.my/imunews/eating-healthy-with-the-malaysian-healthy-plate", type: "link" },
-        { title: "Examples of Malaysian Healthy Plate", url: "/supplements/Examples of Malaysian Healthy Plate.jpg", type: "image" },
-        { title: "Related Sustainable Diet Principles", url: "/supplements/Module 5_2.pdf", type: "document" }
+        { title: "Malaysian Healthy Plate", url: "/new_supplements/Module%205-1.png", type: "image" },
+        { title: "Malaysian Healthy Plate", url: "/new_supplements/Module%205-2.png", type: "image" }
       ]
     },
     {
@@ -172,8 +172,7 @@ const AppContent = () => {
         "Simple plant-forward swap: Commit to one change for the week."
       ],
       supplements: [
-        { title: "Eating Patterns: Fruits & Vegetables", url: "/supplements/Module 6_2.pdf", type: "document" },
-        { title: "Related Sustainable Diet Principles", url: "/supplements/Module 6_1.pdf", type: "document" }
+        { title: "Eating Patterns: Fruits & Vegetables", url: "/new_supplements/Module_6_nutrition_month_veg_split.pdf", type: "document" }
       ]
     },
     {
@@ -195,7 +194,7 @@ const AppContent = () => {
         "Swap challenge: Try a whole grain option this week."
       ],
       supplements: [
-        { title: "Eating Patterns: Grains", url: "/supplements/Module 7.pdf", type: "document" }
+        { title: "Eating Patterns: Grains", url: "/new_supplements/Module_7_nutrition_month_grains_split.pdf", type: "document" }
       ]
     },
     {
@@ -217,8 +216,7 @@ const AppContent = () => {
         "Sustainable protein choice: Choose lower-impact option when eating out."
       ],
       supplements: [
-        { title: "Eating Patterns: Protein", url: "/supplements/Module 8 supplement 1.pdf", type: "document" },
-        { title: "Related Sustainable Diet Principles", url: "/supplements/Module 8.pdf", type: "document" }
+        { title: "Eating Patterns: Protein", url: "/new_supplements/Module_8_nutrition_month_proteins_split.pdf", type: "document" }
       ]
     },
     {
@@ -240,8 +238,8 @@ const AppContent = () => {
         "Reduce packaging: Bring reusable items."
       ],
       supplements: [
-        { title: "Food Waste & Packaging", url: "/supplements/Module 9_1.pdf", type: "document" },
-        { title: "Related Sustainable Diet Principles", url: "/supplements/Module 9_2.pdf", type: "document" }
+        { title: "Food Waste & Packaging", url: "/new_supplements/Module%209.png", type: "image" },
+        { title: "Food Waste & Packaging", url: "/new_supplements/Module%209%20nureition%20month%20food%20store%20steps.pdf", type: "document" }
       ]
     },
     {
@@ -263,7 +261,8 @@ const AppContent = () => {
         "Enjoy nutritious meals with friends/family."
       ],
       supplements: [
-        { title: "Changing Eating Habits", url: "/supplements/Module 10.pdf", type: "document" }
+        { title: "Changing Eating Habits", url: "/new_supplements/Module%2010.png", type: "image" },
+        { title: "Changing Eating Habits", url: "/new_supplements/Module%2010-1.pdf", type: "document" }
       ]
     },
     {
@@ -829,7 +828,7 @@ const AppContent = () => {
                 {module.id === 11 ? (
                   <span className="text-xl leading-relaxed">Read the list of actions you can take to lead and promote sustainable food habits. Which ones will you pledge? Check the boxes next to your pledges before downloading your certificate!</span>
                 ) : (
-                  <span>Supplements</span>
+                  <span>Visual Guide: {module.title}</span>
                 )}
               </h2>
 
@@ -886,61 +885,37 @@ const AppContent = () => {
                 <div className="grid gap-3">
                   {module.supplements && module.supplements.length > 0 ? (
                     <>
-                      {/* 1. Show links first */}
-                      {module.supplements.map((item, idx) => {
-                        const isPreviewed = ((module.id === 1 || module.id === 3 || module.id === 4 || module.id === 5 ||
-                          module.id === 6 || module.id === 7 || module.id === 8 ||
-                          module.id === 9 || module.id === 10) && item.type === 'document') ||
-                          (module.id === 2 || ((module.id === 3 || module.id === 5) && item.type === 'image')); // Hide specific items that have consolidated previews
+                      {/* 1. Show external links first (if any) */}
+                      {module.supplements.filter(item => item.type === 'link').map((item, idx) => (
+                        <div key={idx} className="mb-4 last:mb-0">
+                          <a
+                            href={item.url || "#"}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center p-5 rounded-xl border border-gray-200 bg-white hover:border-[#D4E157] hover:shadow-md hover:-translate-y-0.5 transition-all group cursor-pointer"
+                          >
+                            <div className="bg-gray-50 p-3 rounded-lg mr-5 group-hover:bg-[#F0F4C3] transition-colors border border-gray-100 group-hover:border-[#D4E157]">
+                              <ExternalLink size={24} className="text-gray-500 group-hover:text-[#827717]" />
+                            </div>
+                            <span className="text-[1.1rem] font-medium text-gray-700 group-hover:text-gray-900">{item.title}</span>
+                            <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity bg-gray-50 p-2 rounded-full group-hover:bg-[#F0F4C3]">
+                              <ExternalLink size={18} className="text-gray-400 group-hover:text-[#827717]" />
+                            </div>
+                          </a>
+                        </div>
+                      ))}
 
-                        if (isPreviewed) return null;
-
-                        return (
-                          <div key={idx} className="mb-4 last:mb-0">
-                            <a
-                              href={item.url || "#"}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="flex items-center p-5 rounded-xl border border-gray-200 bg-white hover:border-[#D4E157] hover:shadow-md hover:-translate-y-0.5 transition-all group cursor-pointer"
-                            >
-                              <div className="bg-gray-50 p-3 rounded-lg mr-5 group-hover:bg-[#F0F4C3] transition-colors border border-gray-100 group-hover:border-[#D4E157]">
-                                {item.type === 'link' ? <ExternalLink size={24} className="text-gray-500 group-hover:text-[#827717]" /> : <FileText size={24} className="text-gray-500 group-hover:text-[#827717]" />}
-                              </div>
-                              <span className="text-[1.1rem] font-medium text-gray-700 group-hover:text-gray-900">{item.title}</span>
-                              <div className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity bg-gray-50 p-2 rounded-full group-hover:bg-[#F0F4C3]">
-                                <ExternalLink size={18} className="text-gray-400 group-hover:text-[#827717]" />
-                              </div>
-                            </a>
-                          </div>
-                        );
-                      })}
-
-                      {/* 2. Show Previews after links */}
-
-                      {/* Specific Preview for Module 1, 3, 4, 5, 6, 7, 8, 9 & 10 (Individual Documents/Images) */}
-                      {(module.id === 1 || module.id === 3 || module.id === 4 || module.id === 5 || module.id === 6 ||
-                        module.id === 7 || module.id === 8 || module.id === 9 || module.id === 10) && (
-                          <div className="space-y-4 mt-4">
-                            {module.supplements.filter(i =>
-                              i.type === 'document' || ((module.id === 3 || module.id === 5) && i.type === 'image')
-                            ).map((item, idx) => (
-                              <SupplementPreview key={idx} url={item.url} title={item.title} type={item.type} />
-                            ))}
-                          </div>
-                        )}
-
-                      {/* Specific Preview for Module 2 (Consolidated Gallery) */}
-                      {module.id === 2 && (
+                      {/* 2. Show Visual Guide Previews (Images/PDFs) */}
+                      {module.supplements.some(item => item.type !== 'link') && (
                         <div className="space-y-4 mt-4">
-                          <SupplementPreview
-                            title={module.title}
-                            items={module.supplements.filter(i => i.type !== 'link')}
-                          />
+                          {module.supplements.filter(item => item.type !== 'link').map((item, idx) => (
+                            <SupplementPreview key={idx} url={item.url} title={item.title} type={item.type} />
+                          ))}
                         </div>
                       )}
                     </>
                   ) : (
-                    <p className="text-gray-500 italic p-4 border-2 border-dashed border-gray-200 rounded">No factsheet available for this module yet.</p>
+                    <p className="text-gray-500 italic p-4 border-2 border-dashed border-gray-200 rounded">No visual guide available for this module yet.</p>
                   )}
                 </div>
               )}
