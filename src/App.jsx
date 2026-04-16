@@ -908,8 +908,22 @@ const AppContent = () => {
                       {/* 2. Show Visual Guide Previews (Images/PDFs) */}
                       {module.supplements.some(item => item.type !== 'link') && (
                         <div className="space-y-4 mt-4">
-                          {module.supplements.filter(item => item.type !== 'link').map((item, idx) => (
-                            <SupplementPreview key={idx} url={item.url} title={item.title} type={item.type} />
+                          {/* All images in a consolidated gallery */}
+                          {module.supplements.some(item => item.type === 'image') && (
+                            <SupplementPreview
+                              title={module.title}
+                              items={module.supplements.filter(item => item.type === 'image')}
+                            />
+                          )}
+                          
+                          {/* All PDFs mapped to their own individual preview boxes */}
+                          {module.supplements.filter(item => item.type === 'document').map((item, idx) => (
+                            <SupplementPreview
+                              key={`doc-${idx}`}
+                              url={item.url}
+                              title={item.title}
+                              type={item.type}
+                            />
                           ))}
                         </div>
                       )}
