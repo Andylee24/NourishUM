@@ -255,7 +255,8 @@ const AppContent = () => {
         "Enjoy nutritious meals with friends/family."
       ],
       supplements: [
-        { title: "Nutrition Month UPF", url: "/new_supplements/nutrition%20month%20upf.pdf", type: "document" }
+        { title: "Changing Eating Habits", url: "/new_supplements/change%20eat%20habits.pdf", type: "document" },
+        { title: "Changing Eating Habits", url: "/new_supplements/nutrition%20month%20upf.pdf", type: "document" }
       ]
     },
     {
@@ -540,6 +541,43 @@ const AppContent = () => {
 
   // --- Sub-Components ---
 
+  const QuizView = () => (
+    <div className="flex-grow bg-[#F9FBE7] py-16 px-4">
+      <div className="container mx-auto max-w-4xl">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 font-handwriting">Quiz</h1>
+          <div className="h-1 w-24 bg-[#D4E157] mx-auto rounded-full mb-6"></div>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Test your knowledge on sustainable diets and healthy eating habits.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[
+            { title: "Sustainable Diet Basics", description: "Test your understanding of sustainable diet principles and components.", link: "https://docs.google.com/forms/d/e/1FAIpQLSctqUuTHVofFWiRGZVWoJQXuIgipANhYjXwEPMgVASCXczsww/viewform" },
+            { title: "Food Labels & Choices", description: "Check your knowledge on reading food labels and making informed choices.", link: "https://docs.google.com/forms/d/e/1FAIpQLSctqUuTHVofFWiRGZVWoJQXuIgipANhYjXwEPMgVASCXczsww/viewform" }
+          ].map((quiz, idx) => (
+            <a
+              key={idx}
+              href={quiz.link}
+              target="_blank"
+              rel="noreferrer"
+              className="block p-6 rounded-2xl border-2 border-gray-800 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)] hover:-translate-y-1 transition-all group"
+            >
+              <div className="flex items-center mb-3">
+                <div className="bg-[#F0F4C3] p-3 rounded-xl mr-4 border border-gray-200">
+                  <Target size={24} className="text-[#827717]" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 group-hover:text-[#827717] transition-colors">{quiz.title}</h3>
+              </div>
+              <p className="text-gray-500 ml-16">{quiz.description}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+
   const ResourcesView = () => (
     <div className="flex-grow bg-[#F9FBE7] py-16 px-4">
       <div className="container mx-auto max-w-4xl">
@@ -553,8 +591,7 @@ const AppContent = () => {
 
         <div className="space-y-6">
           {[
-            { title: "Sustainable diet recipe", url: "/supplements/sustainable diet recipe.pdf", type: "document" },
-            { title: "Sustainable Food@UM", url: "https://sustainability.um.edu.my/healthy-and-sustainable-food-um", type: "link" },
+{ title: "Sustainable Food@UM", url: "https://sustainability.um.edu.my/healthy-and-sustainable-food-um", type: "link" },
             { title: "Link for questionnaire (4-6 minutes)", url: "https://docs.google.com/forms/d/e/1FAIpQLSctqUuTHVofFWiRGZVWoJQXuIgipANhYjXwEPMgVASCXczsww/viewform", type: "link" },
             { title: "Link for food image submitting", url: "https://docs.google.com/forms/d/e/1FAIpQLSdcF17wCjv80idWm1dBRlnJk8xhR5sNIXz4tOMNLEgRpZW6Yg/viewform?usp=publish-editor", type: "link" },
             { title: "Reference", url: "/new_supplements/Reference.png", type: "document" }
@@ -1110,6 +1147,7 @@ const AppContent = () => {
 
           <nav className="hidden md:flex items-center space-x-8 font-semibold">
             <Link to="/" className={`hover:bg-white/20 px-3 py-1 rounded transition-colors ${location.pathname === '/' ? 'bg-white/20' : ''}`}>Curriculum</Link>
+            <Link to="/quiz" className={`hover:bg-white/20 px-3 py-1 rounded transition-colors ${location.pathname === '/quiz' ? 'bg-white/20' : ''}`}>Quiz</Link>
             <Link to="/resources" className={`hover:bg-white/20 px-3 py-1 rounded transition-colors ${location.pathname === '/resources' ? 'bg-white/20' : ''}`}>Resources</Link>
 
             {user ? (
@@ -1137,6 +1175,7 @@ const AppContent = () => {
         {isMenuOpen && (
           <div className="md:hidden bg-[#c0ca33] px-4 py-4 space-y-4 shadow-inner">
             <Link to="/" onClick={() => setIsMenuOpen(false)} className="block hover:text-white w-full text-left font-medium">Curriculum</Link>
+            <Link to="/quiz" onClick={() => setIsMenuOpen(false)} className="block hover:text-white w-full text-left font-medium">Quiz</Link>
             <Link to="/resources" onClick={() => setIsMenuOpen(false)} className="block hover:text-white w-full text-left font-medium">Resources</Link>
             {user ? (
               <button onClick={handleLogout} className="w-full bg-gray-800 text-white px-5 py-3 rounded-lg font-bold">Logout</button>
@@ -1150,6 +1189,7 @@ const AppContent = () => {
       <main className="flex-grow flex flex-col">
         <Routes>
           <Route path="/" element={<HomeView />} />
+          <Route path="/quiz" element={<QuizView />} />
           <Route path="/resources" element={<ResourcesView />} />
           <Route path="/login" element={<AuthView type="login" />} />
           <Route path="/signup" element={<AuthView type="signup" />} />
