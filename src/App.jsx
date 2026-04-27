@@ -150,7 +150,7 @@ const AppContent = () => {
     },
     {
       id: 6,
-      title: "Eating Patterns: Fruits & Vegetables",
+      title: "Fruits & Vegetables",
       description: "Understand the health/environmental benefits of higher F/V intake and strategies to increase it.",
       time: "5 mins",
       type: "video",
@@ -167,7 +167,7 @@ const AppContent = () => {
         "Simple plant-forward swap: Commit to one change for the week."
       ],
       supplements: [
-        { title: "Eating Patterns: Fruits & Vegetables", url: "/new_supplements/Module_6_nutrition_month_veg_split.pdf", type: "document" }
+        { title: "Fruits & Vegetables", url: "/new_supplements/Module_6_nutrition_month_veg_split.pdf", type: "document" }
       ]
     },
     {
@@ -255,7 +255,6 @@ const AppContent = () => {
         "Enjoy nutritious meals with friends/family."
       ],
       supplements: [
-        { title: "Changing Eating Habits", url: "/new_supplements/change%20eat%20habits.pdf", type: "document" },
         { title: "Nutrition Month UPF", url: "/new_supplements/nutrition%20month%20upf.pdf", type: "document" }
       ]
     },
@@ -779,8 +778,8 @@ const AppContent = () => {
           </div>
 
           <div className="space-y-8">
-            {/* Box 1: What will you learn? (Objectives) or Pledge Input */}
-            {module.id !== 12 && (
+            {/* Box 1: What will you learn? (Objectives) */}
+            {module.id !== 11 && module.id !== 12 && (
               <div className="border-2 border-gray-800 rounded-lg p-6 md:p-8 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)] transition-shadow">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
                   <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800">1</span>
@@ -819,7 +818,7 @@ const AppContent = () => {
             <div className="border-2 border-gray-800 rounded-lg p-6 md:p-8 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)] transition-shadow">
               <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-start">
                 {module.id !== 12 && (
-                  <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800 flex-shrink-0 mt-1">{module.id === 11 ? 2 : 3}</span>
+                  <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800 flex-shrink-0 mt-1">{module.id === 11 ? 1 : 3}</span>
                 )}
                 {module.id === 11 ? (
                   <span className="text-xl leading-relaxed">Read the list of actions you can take to lead and promote sustainable food habits. Which ones will you pledge? Check the boxes next to your pledges before downloading your certificate!</span>
@@ -938,7 +937,7 @@ const AppContent = () => {
                   <CheckSquare size={100} />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center relative z-10">
-                  <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800">{module.id === 11 ? 3 : 4}</span>
+                  <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800">{module.id === 11 ? 2 : 4}</span>
                   Action steps:
                 </h2>
                 <div className="space-y-4 relative z-10">
@@ -970,7 +969,7 @@ const AppContent = () => {
 
           {/* Footer Navigation */}
           <div className="mt-12 flex justify-end">
-            {nextModule ? (
+            {nextModule && module.id !== 11 ? (
               <button
                 onClick={() => openModule(nextModule)}
                 className="group flex items-center bg-black text-white px-6 py-3 rounded-full hover:bg-[#827717] transition shadow-lg font-bold text-lg"
