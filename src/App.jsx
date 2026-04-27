@@ -53,9 +53,7 @@ const AppContent = () => {
         "Reflection prompt: Write down why this principle matters for your health or the environment."
       ],
       supplements: [
-        { title: "What is a Sustainable Diet", url: "/new_supplements/Module%201-1.png", type: "image" },
-        { title: "What is a Sustainable Diet", url: "/new_supplements/Module%201-2.png", type: "image" },
-        { title: "What is a Sustainable Diet", url: "/new_supplements/Module%201-3.png", type: "image" }
+        { title: "What is a Sustainable Diet", url: "/new_supplements/What%20is%20a%20Sustainable%20Diet.pdf", type: "document" }
       ]
     },
     {
@@ -78,10 +76,7 @@ const AppContent = () => {
         "Key takeaway identification: Write down one key message that changed your thinking."
       ],
       supplements: [
-        { title: "Our Choices Matter", url: "/new_supplements/Module%202-1.png", type: "image" },
-        { title: "Our Choices Matter", url: "/new_supplements/Module%202-2.png", type: "image" },
-        { title: "Our Choices Matter", url: "/new_supplements/Module%202-3.png", type: "image" },
-        { title: "Our Choices Matter", url: "/new_supplements/Module%202-4.png", type: "image" }
+        { title: "Our Choices Matter", url: "/new_supplements/Our%20Choices%20Matter.pdf", type: "document" }
       ]
     },
     {
@@ -127,7 +122,7 @@ const AppContent = () => {
         "Real-life application: Identify one small change for next shopping trip."
       ],
       supplements: [
-        { title: "Visual Guide", url: "/new_supplements/Module%204.png", type: "image" }
+        { title: "Reading Labels", url: "/new_supplements/Reading%20Labels.pdf", type: "document" }
       ]
     },
     {
@@ -177,7 +172,7 @@ const AppContent = () => {
     },
     {
       id: 7,
-      title: "Eating Patterns: Grains",
+      title: "Rice, other cereals, wholegrain cereal-based products and tubers",
       description: "Differentiate whole grains from refined carbohydrates and explain the benefits of choosing whole grains.",
       time: "3 mins",
       type: "video",
@@ -194,12 +189,12 @@ const AppContent = () => {
         "Swap challenge: Try a whole grain option this week."
       ],
       supplements: [
-        { title: "Eating Patterns: Grains", url: "/new_supplements/Module_7_nutrition_month_grains_split.pdf", type: "document" }
+        { title: "Rice, other cereals, wholegrain cereal-based products and tubers", url: "/new_supplements/Module_7_nutrition_month_grains_split.pdf", type: "document" }
       ]
     },
     {
       id: 8,
-      title: "Eating Patterns: Protein",
+      title: "Fish, poultry/eggs, legumes, milk & milk products",
       description: "Compare environmental impact of protein sources and select balanced, sustainable choices.",
       time: "3 mins",
       type: "video",
@@ -216,7 +211,7 @@ const AppContent = () => {
         "Sustainable protein choice: Choose lower-impact option when eating out."
       ],
       supplements: [
-        { title: "Eating Patterns: Protein", url: "/new_supplements/Module_8_nutrition_month_proteins_split.pdf", type: "document" }
+        { title: "Fish, poultry/eggs, legumes, milk & milk products", url: "/new_supplements/Module_8_nutrition_month_proteins_split.pdf", type: "document" }
       ]
     },
     {
@@ -238,8 +233,7 @@ const AppContent = () => {
         "Reduce packaging: Bring reusable items."
       ],
       supplements: [
-        { title: "Food Waste & Packaging", url: "/new_supplements/Module%209.png", type: "image" },
-        { title: "Food Waste & Packaging", url: "/new_supplements/Module%209%20nureition%20month%20food%20store%20steps.pdf", type: "document" }
+        { title: "Food Waste and Packaging", url: "/new_supplements/Food%20Waste%20and%20Packaging.pdf", type: "document" }
       ]
     },
     {
@@ -261,8 +255,8 @@ const AppContent = () => {
         "Enjoy nutritious meals with friends/family."
       ],
       supplements: [
-        { title: "Changing Eating Habits", url: "/new_supplements/Module%2010.png", type: "image" },
-        { title: "Changing Eating Habits", url: "/new_supplements/Module%2010-1.pdf", type: "document" }
+        { title: "Changing Eating Habits", url: "/new_supplements/change%20eat%20habits.pdf", type: "document" },
+        { title: "Nutrition Month UPF", url: "/new_supplements/nutrition%20month%20upf.pdf", type: "document" }
       ]
     },
     {
@@ -312,7 +306,8 @@ const AppContent = () => {
         { title: "Making our favourite meals more Sustainable", url: "/supplements/Making our favourite meals more Sustainable.pdf", type: "document" },
         { title: "Nutritionals per Single Serving", url: "/supplements/Nutritionals per Single Serving.pdf", type: "document" },
         { title: "Sustainable Diets Guidelines", url: "/supplements/Sustainable Diets Guidelines.pdf", type: "document" },
-        { title: "Healthy and Sustainable Food@UM", url: "https://sustainability.um.edu.my/healthy-and-sustainable-food-um", type: "link" }
+        { title: "Healthy and Sustainable Food@UM", url: "https://sustainability.um.edu.my/healthy-and-sustainable-food-um", type: "link" },
+        { title: "Reference", url: "/supplements/Reference.png", type: "image" }
       ]
     }
   ];
@@ -562,7 +557,8 @@ const AppContent = () => {
             { title: "Sustainable diet recipe", url: "/supplements/sustainable diet recipe.pdf", type: "document" },
             { title: "Sustainable Food@UM", url: "https://sustainability.um.edu.my/healthy-and-sustainable-food-um", type: "link" },
             { title: "Link for questionnaire (4-6 minutes)", url: "https://docs.google.com/forms/d/e/1FAIpQLSctqUuTHVofFWiRGZVWoJQXuIgipANhYjXwEPMgVASCXczsww/viewform", type: "link" },
-            { title: "Link for food image submitting", url: "https://docs.google.com/forms/d/e/1FAIpQLSdcF17wCjv80idWm1dBRlnJk8xhR5sNIXz4tOMNLEgRpZW6Yg/viewform?usp=publish-editor", type: "link" }
+            { title: "Link for food image submitting", url: "https://docs.google.com/forms/d/e/1FAIpQLSdcF17wCjv80idWm1dBRlnJk8xhR5sNIXz4tOMNLEgRpZW6Yg/viewform?usp=publish-editor", type: "link" },
+            { title: "Reference", url: "/new_supplements/Reference.png", type: "document" }
           ].map((item, idx) => (
             <a
               key={idx}
@@ -915,7 +911,7 @@ const AppContent = () => {
                               items={module.supplements.filter(item => item.type === 'image')}
                             />
                           )}
-                          
+
                           {/* All PDFs mapped to their own individual preview boxes */}
                           {module.supplements.filter(item => item.type === 'document').map((item, idx) => (
                             <SupplementPreview
@@ -1051,29 +1047,32 @@ const AppContent = () => {
             <p className="text-gray-500 max-w-2xl mx-auto text-lg">Detailed modules designed to transform your understanding of sustainable diet.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {modules.map((module) => (
+          <div className="flex flex-wrap justify-center gap-8">
+            {modules.filter(m => m.id !== 12).map((module) => (
               <div
                 key={module.id}
                 onClick={() => openModule(module)}
-                className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer border-0 flex flex-col h-full ring-1 ring-gray-100"
+                className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] xl:w-[calc(25%-1.5rem)] group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer border-0 flex flex-col h-full ring-1 ring-gray-100"
               >
-                <div className="relative h-56 overflow-hidden bg-gray-100">
-                  <img src={module.image} alt={module.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 group-hover:rotate-1" />
-                  <div className="absolute top-0 right-0 m-3 px-3 py-1 rounded-full text-xs font-bold text-white backdrop-blur-md bg-black/50 shadow-sm border border-white/20">
-                    {module.time}
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity"></div>
-
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-75 group-hover:scale-100">
-                    <div className="bg-white/20 backdrop-blur-sm p-4 rounded-full border border-white/50 shadow-2xl">
-                      <PlayCircle className="text-white w-12 h-12" fill="currentColor" stroke="none" />
+                <div className="relative h-56 overflow-hidden bg-[#2E7D32]">
+                  {/* Dynamic text-based Module banner replacing the old image */}
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-tr from-[#388E3C] to-[#4CAF50] group-hover:from-[#2E7D32] group-hover:to-[#388E3C] transition-colors duration-500">
+                    <div className="transition-transform duration-700 group-hover:scale-105 group-hover:-rotate-1">
+                      <span className="text-4xl font-black text-[#FFF176] uppercase tracking-wider drop-shadow-md">
+                        Module {module.id}
+                      </span>
                     </div>
                   </div>
 
-                  <div className="absolute bottom-4 left-4 right-4 translate-y-2 group-hover:translate-y-0 transition-transform">
-                    <div className="flex items-center text-xs font-bold text-[#D4E157] mb-1 uppercase tracking-wider shadow-black drop-shadow-md">
-                      Module {module.id}
+                  <div className="absolute top-0 right-0 m-3 px-3 py-1 rounded-full text-xs font-bold text-white backdrop-blur-md bg-black/40 shadow-sm border border-white/10">
+                    {module.time}
+                  </div>
+
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-opacity duration-300"></div>
+
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-75 group-hover:scale-100">
+                    <div className="bg-white/20 backdrop-blur-sm p-4 rounded-full border border-white/50 shadow-2xl mt-16">
+                      <PlayCircle className="text-white w-10 h-10" fill="currentColor" stroke="none" />
                     </div>
                   </div>
                 </div>
