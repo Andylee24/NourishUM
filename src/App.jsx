@@ -15,6 +15,146 @@ import {
   useLocation
 } from 'react-router-dom';
 
+// QuizWidget — Pre (record answers, no feedback) and Post (show results based on Pre)
+const QuizWidget = ({ questions, mode, onPreSubmit, preAnswers }) => {
+  const [answers, setAnswers] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+  const isPost = mode === 'post';
+  const hasPreData = isPost && preAnswers && Object.keys(preAnswers).length > 0;
+
+  const isMulti = (q) => Array.isArray(q.correct);
+
+  const checkAnswer = (qIdx, answer) => {
+    const q = questions[qIdx];
+    if (answer === undefined || answer === null) return null;
+    if (Array.isArray(q.correct)) {
+      if (!Array.isArray(answer)) return false;
+      return q.correct.length === answer.length && q.correct.every(c => answer.includes(c));
+    }
+    return q.correct === answer;
+  };
+
+  const isCorrectOpt = (qIdx, optIdx) => {
+    const q = questions[qIdx];
+    if (Array.isArray(q.correct)) return q.correct.includes(optIdx);
+    return q.correct === optIdx;
+  };
+
+  const handleSelect = (qIdx, optIdx) => {
+    if (submitted && !isPost) return;
+    if (isPost && hasPreData) {
+      const preResult = checkAnswer(qIdx, preAnswers[qIdx]);
+      if (preResult === true) return;
+    }
+    setAnswers(prev => {
+      if (isMulti(questions[qIdx])) {
+        const cur = prev[qIdx] || [];
+        const next = cur.includes(optIdx) ? cur.filter(i => i !== optIdx) : [...cur, optIdx];
+        return { ...prev, [qIdx]: next };
+      }
+      return { ...prev, [qIdx]: optIdx };
+    });
+  };
+
+  const handleSubmit = () => {
+    setSubmitted(true);
+    if (!isPost && onPreSubmit) onPreSubmit(answers);
+  };
+
+  const handleRetry = () => { setAnswers({}); setSubmitted(false); };
+
+  const allAnswered = questions.every((q, i) => {
+    const a = answers[i];
+    return Array.isArray(q.correct) ? (a && a.length > 0) : a !== undefined;
+  });
+
+  return (
+    <div className="space-y-6">
+      {isPost && hasPreData && (
+        <div className="bg-[#F0F4C3] border border-[#D4E157] rounded-lg p-4 text-sm text-gray-700">
+          Here's how you did on the Pre-quiz. Correct answers are shown in green — review any you missed!
+        </div>
+      )}
+      {isPost && !hasPreData && (
+        <div className="bg-amber-50 border border-amber-300 rounded-lg p-4 text-sm text-gray-700">
+          Complete the Pre-quiz above first to see your results here.
+        </div>
+      )}
+      {questions.map((q, qIdx) => {
+        const selected = answers[qIdx];
+        const multi = isMulti(q);
+        const preResult = hasPreData ? checkAnswer(qIdx, preAnswers[qIdx]) : null;
+
+        return (
+          <div key={qIdx}>
+            <div className="flex items-center mb-3">
+              <p className="font-semibold text-gray-800">{qIdx + 1}. {q.question}</p>
+              {isPost && preResult === true && (
+                <span className="ml-2 text-green-600 text-xs font-bold flex items-center bg-green-50 px-2 py-0.5 rounded-full">
+                  <CheckCircle size={14} className="mr-1" /> Correct
+                </span>
+              )}
+              {isPost && preResult === false && (
+                <span className="ml-2 text-orange-600 text-xs font-bold flex items-center bg-orange-50 px-2 py-0.5 rounded-full">
+                  Review
+                </span>
+              )}
+            </div>
+            <div className="space-y-2">
+              {q.options.map((opt, optIdx) => {
+                const sel = multi ? (selected || []).includes(optIdx) : selected === optIdx;
+                const optCorrect = isCorrectOpt(qIdx, optIdx);
+                let cls = 'border-gray-200 hover:border-gray-400 cursor-pointer';
+                let locked = false;
+
+                if (isPost && preResult === true) {
+                  if (optCorrect) cls = 'border-green-500 bg-green-50';
+                  locked = true;
+                } else if (isPost && preResult === false) {
+                  const preSel = multi ? (preAnswers[qIdx] || []).includes(optIdx) : preAnswers[qIdx] === optIdx;
+                  if (optCorrect) cls = 'border-green-500 bg-green-50';
+                  else if (preSel && !optCorrect) cls = 'border-red-500 bg-red-50';
+                } else if (submitted && isPost && !hasPreData) {
+                  if (optCorrect) cls = 'border-green-500 bg-green-50';
+                  else if (sel && !optCorrect) cls = 'border-red-500 bg-red-50';
+                } else if (sel) {
+                  cls = 'border-[#827717] bg-[#F0F4C3]';
+                }
+
+                if (locked || submitted) cls = cls.replace('cursor-pointer', 'cursor-default');
+
+                return (
+                  <div key={optIdx} onClick={() => handleSelect(qIdx, optIdx)} className={`p-3 rounded border-2 transition-all flex items-start ${cls}`}>
+                    <div className={`w-5 h-5 border-2 ${multi ? 'rounded' : 'rounded-full'} mr-3 mt-0.5 flex-shrink-0 flex items-center justify-center ${sel || (locked && optCorrect) ? 'bg-[#827717] border-[#827717]' : 'border-gray-400'}`}>
+                      {(sel || (locked && optCorrect)) && <CheckCircle size={12} className="text-white" />}
+                    </div>
+                    <span className="text-gray-700 text-sm">{opt}</span>
+                    {((isPost && preResult === true && optCorrect) || (isPost && preResult === false && optCorrect)) && (
+                      <CheckCircle size={16} className="text-green-600 ml-2 mt-0.5 flex-shrink-0" />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
+      {!isPost && (
+        <div className="flex space-x-3 pt-4 border-t border-gray-100">
+          <button onClick={handleSubmit} disabled={!allAnswered || submitted} className="bg-[#D4E157] hover:bg-[#c0ca33] disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 font-bold py-2 px-6 rounded-lg transition shadow text-sm">
+            {submitted ? 'Answers Recorded' : 'Submit'}
+          </button>
+          {submitted && (
+            <button onClick={handleRetry} className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-6 rounded-lg transition text-sm">
+              Try Again
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
 const App = () => {
   return (
     <Router>
@@ -31,6 +171,7 @@ const AppContent = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState(null); // null = guest, object = logged in
   const [completedActions, setCompletedActions] = useState({}); // { moduleId: { actionIndex: boolean } }
+  const [preQuizAnswers, setPreQuizAnswers] = useState({}); // { moduleId: { qIdx: selectedOption | [indices] } }
 
   // --- Curriculum Data ---
   const modules = [
@@ -40,8 +181,8 @@ const AppContent = () => {
       description: "Define a sustainable diet and explain its key components in relation to health and environmental sustainability.",
       time: "5 mins",
       type: "video",
-      videoId: "T7RFNuHIUhE",
-      image: "https://img.youtube.com/vi/T7RFNuHIUhE/maxresdefault.jpg",
+      videoId: "APHK40X5E8o",
+      image: "https://img.youtube.com/vi/APHK40X5E8o/maxresdefault.jpg",
       objectives: [
         "Define a sustainable diet and explain its key components in relation to health and environmental sustainability.",
         "Identify at least four core sustainable diet principles."
@@ -54,6 +195,10 @@ const AppContent = () => {
       ],
       supplements: [
         { title: "What is a Sustainable Diet", url: "/new_supplements/What%20is%20a%20Sustainable%20Diet.pdf", type: "document" }
+      ],
+      quiz: [
+        { question: "Which of the following best reflects sustainable diet principles?", options: ["Eat more meat and fewer vegetables", "Choose foods high in fat, sugar, and salt", "Eat a varied, balanced diet and include more plant-based foods", "Skip meals to reduce food consumption"], correct: 2 },
+        { question: "You are buying a drink at the campus café. Which is the most sustainable choice?", options: ["Bubble tea with extra sugar", "Packaged sweetened juice", "Teh-O limau with no sugar", "Flavoured milk with added sugar"], correct: 2 }
       ]
     },
     {
@@ -77,6 +222,10 @@ const AppContent = () => {
       ],
       supplements: [
         { title: "Our Choices Matter", url: "/new_supplements/Our%20Choices%20Matter.pdf", type: "document" }
+      ],
+      quiz: [
+        { question: "Which of the following best represents the main challenges of food systems?", options: ["High carbon footprint, low wages, unhealthy food choices", "Too many vegetables, too much food", "Not enough supermarkets", "People cooking too much"], correct: 0 },
+        { question: "You are choosing lunch at the UM canteen. Which option has the lowest carbon footprint?", options: ["Beef burger with fries", "Fried chicken rice", "Nasi campur with vegetables and tempeh", "Processed meat sandwich"], correct: 2 }
       ]
     },
     {
@@ -99,8 +248,11 @@ const AppContent = () => {
         "Feasibility check: Identify barriers and solutions."
       ],
       supplements: [
-        { title: "Buying Food Locally", url: "/new_supplements/Module%203-1.png", type: "image" },
-        { title: "Buying Food Locally", url: "/new_supplements/Module%203-2.png", type: "image" }
+        { title: "Buying Food Locally", url: "/new_supplements/M3.pdf", type: "document" }
+      ],
+      quiz: [
+        { question: "Buying food produced locally is always a better option for the planet, compared to food shipped from afar.", options: ["True", "False"], correct: 1 },
+        { question: "You are choosing fruits at a nearby supermarket. Which option is the most sustainable choice?", options: ["Imported apples from another country", "Packaged fruit snacks", "Locally grown papaya or banana", "Processed fruit juice with added sugar"], correct: 2 }
       ]
     },
     {
@@ -122,7 +274,11 @@ const AppContent = () => {
         "Real-life application: Identify one small change for next shopping trip."
       ],
       supplements: [
-        { title: "Reading Labels", url: "/new_supplements/Reading%20Labels.pdf", type: "document" }
+        { title: "Reading Labels", url: "/new_supplements/M4.pdf", type: "document" }
+      ],
+      quiz: [
+        { question: "For the information in food label, which option is correct?", options: ["Portion size → Helps avoid overeating", "Food label origin → Helps achieve personal nutrition goals", "Nutrition information → Ensures traceability", "All are incorrect"], correct: 0 },
+        { question: "You are buying a snack at mart. Which is the best choice based on the food label?", options: ["A snack high in sugar and fat", "A snack with lower sugar and salt per 100g", "A snack with colourful packaging", "A snack with no nutrition label"], correct: 1 }
       ]
     },
     {
@@ -144,8 +300,11 @@ const AppContent = () => {
         "Real-life commitment: Set a goal for your next meal."
       ],
       supplements: [
-        { title: "Malaysian Healthy Plate", url: "/new_supplements/Module%205-1.png", type: "image" },
-        { title: "Malaysian Healthy Plate", url: "/new_supplements/Module%205-2.png", type: "image" }
+        { title: "Malaysian Healthy Plate", url: "/new_supplements/M5.pdf", type: "document" }
+      ],
+      quiz: [
+        { question: "Which statement is correct about the Malaysian Healthy Plate?", options: ["Half vegetables & fruits, quarter carbs, quarter protein", "Half carbs, quarter vegetables, quarter protein", "Only protein and vegetables are needed", "More meat and less vegetables"], correct: 0 },
+        { question: "You are choosing lunch at the UM canteen. Which plate follows the Malaysian Healthy Plate?", options: ["Rice + fried chicken only", "Rice + vegetables + egg/tofu", "Large portion of rice + no vegetables", "Noodles + processed meat"], correct: 1 }
       ]
     },
     {
@@ -168,6 +327,10 @@ const AppContent = () => {
       ],
       supplements: [
         { title: "Fruits & Vegetables", url: "/new_supplements/Module_6_nutrition_month_veg_split.pdf", type: "document" }
+      ],
+      quiz: [
+        { question: "Which is a recommended practice for fruits and vegetables?", options: ["Eat at least 5 servings a day", "Eat vegetables once a week", "Avoid fruits because of sugar", "Replace vegetables with snacks"], correct: 0 },
+        { question: "You are choosing lunch at the UM canteen. What is the best way to increase your fruit and vegetable intake?", options: ["Choose rice and meat only", "Add two types of vegetables to your meal", "Skip vegetables to save money", "Drink a sugary beverage instead"], correct: 1 }
       ]
     },
     {
@@ -190,6 +353,10 @@ const AppContent = () => {
       ],
       supplements: [
         { title: "Rice, other cereals, wholegrain cereal-based products and tubers", url: "/new_supplements/Module_7_nutrition_month_grains_split.pdf", type: "document" }
+      ],
+      quiz: [
+        { question: "Which is a whole grain choice?", options: ["Brown rice", "White bread", "Refined noodles", "Sugary cereal"], correct: 0 },
+        { question: "You are choosing a meal at the UM canteen. Which option helps you eat more whole grains?", options: ["White rice with fried chicken", "Brown rice with vegetables and tofu", "Instant noodles", "White bread with processed meat"], correct: 1 }
       ]
     },
     {
@@ -212,6 +379,10 @@ const AppContent = () => {
       ],
       supplements: [
         { title: "Fish, poultry/eggs, legumes, milk & milk products", url: "/new_supplements/Module_8_nutrition_month_proteins_split.pdf", type: "document" }
+      ],
+      quiz: [
+        { question: "Which is a more sustainable protein choice?", options: ["Beef", "Processed meat", "Tofu or tempeh", "Fried chicken"], correct: 2 },
+        { question: "You are choosing lunch at the UM canteen. Which protein choice is more sustainable?", options: ["Large portion of beef", "Fried chicken every day", "Tempeh or tofu with vegetables", "Processed sausages"], correct: 2 }
       ]
     },
     {
@@ -234,6 +405,10 @@ const AppContent = () => {
       ],
       supplements: [
         { title: "Food Waste and Packaging", url: "/new_supplements/Food%20Waste%20and%20Packaging.pdf", type: "document" }
+      ],
+      quiz: [
+        { question: "What do you think, how big a problem is food waste?", options: ["Close to a third of the world's food production is wasted each year.", "The equivalent of 990 billion USD is lost to food waste each year.", "The world's food waste can feed 2 billion people.", "Food waste contributes to 8% to global greenhouse gas emissions."], correct: [0, 1, 2, 3] },
+        { question: "You are ordering takeaway at the UM canteen. Which action is the most sustainable?", options: ["Take extra plastic bags and utensils", "Order more food than you can finish", "Bring your own container and order a suitable portion", "Throw away leftover food"], correct: 2 }
       ]
     },
     {
@@ -255,8 +430,12 @@ const AppContent = () => {
         "Enjoy nutritious meals with friends/family."
       ],
       supplements: [
-        { title: "Changing Eating Habits", url: "/new_supplements/change%20eat%20habits.pdf", type: "document" },
+        { title: "Changing Eating Habits", url: "/new_supplements/M10.pdf", type: "document" },
         { title: "Changing Eating Habits", url: "/new_supplements/nutrition%20month%20upf.pdf", type: "document" }
+      ],
+      quiz: [
+        { question: "What helps build a lasting, healthy habit?", options: ["Making small changes consistently", "Changing everything at once", "Skipping meals", "Eating randomly"], correct: 0 },
+        { question: "After the NourishUM intervention, a student changed their eating habit from eating mainly meat to including tofu and beans. What improved?", options: ["Lower environmental impact", "Higher carbon footprint", "More processed food", "No change"], correct: 0 }
       ]
     },
     {
@@ -339,6 +518,10 @@ const AppContent = () => {
         [actionIndex]: !prev[moduleId]?.[actionIndex]
       }
     }));
+  };
+
+  const savePreQuiz = (moduleId, answers) => {
+    setPreQuizAnswers(prev => ({ ...prev, [moduleId]: answers }));
   };
 
   const handleLogin = (e) => {
@@ -770,6 +953,8 @@ const AppContent = () => {
     );
   });
 
+  // Note: QuizWidget is defined below, outside AppContent
+
   const ModuleDetailView = () => {
     const { slug } = useParams();
     const module = modules.find(m => m.slug === slug);
@@ -815,47 +1000,51 @@ const AppContent = () => {
           </div>
 
           <div className="space-y-8">
-            {/* Box 1: What will you learn? (Objectives) */}
+            {/* Box 1: Pre-quiz (no correct/incorrect feedback) */}
             {module.id !== 11 && module.id !== 12 && (
               <div className="border-2 border-gray-800 rounded-lg p-6 md:p-8 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)] transition-shadow">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
                   <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800">1</span>
-                  {module.id === 11 ? "What Actions will You Pledge to Take?" : "What will you learn?"}
+                  Pre-quiz
                 </h2>
-                {module.id === 11 ? (
-                  <textarea
-                    className="w-full h-32 p-4 border-2 border-dashed border-gray-300 rounded-lg focus:border-[#D4E157] focus:ring-0 active:outline-none resize-none font-sans text-gray-700 placeholder-gray-400"
-                    placeholder="Share your pledge here..."
-                  ></textarea>
-                ) : (
-                  <ul className="space-y-3 pl-3">
-                    {module.objectives.map((obj, idx) => (
-                      <li key={idx} className="flex items-start text-gray-700 text-lg">
-                        <span className="mr-3 text-[#827717] font-bold">•</span>
-                        <span>{obj}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                <QuizWidget questions={module.quiz} mode="pre" onPreSubmit={(answers) => savePreQuiz(module.id, answers)} />
               </div>
             )}
 
-            {/* Box 2: Video - Only show if NOT module 11 or 12 */}
+            {/* Box 2: Learning Objectives */}
             {module.id !== 11 && module.id !== 12 && (
               <div className="border-2 border-gray-800 rounded-lg p-6 md:p-8 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)] transition-shadow">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
                   <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800">2</span>
+                  Learning Objectives
+                </h2>
+                <ul className="space-y-3 pl-3">
+                  {module.objectives.map((obj, idx) => (
+                    <li key={idx} className="flex items-start text-gray-700 text-lg">
+                      <span className="mr-3 text-[#827717] font-bold">•</span>
+                      <span>{obj}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Box 3: Video - Only show if NOT module 11 or 12 */}
+            {module.id !== 11 && module.id !== 12 && (
+              <div className="border-2 border-gray-800 rounded-lg p-6 md:p-8 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)] transition-shadow">
+                <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                  <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800">3</span>
                   Video: {module.title} <span className="text-gray-500 font-normal text-base ml-2">({module.time})</span>
                 </h2>
                 <VideoPlayer videoId={module.type === 'video' ? module.videoId : null} title={module.title} />
               </div>
             )}
 
-            {/* Box 3: Factsheet / Supplements or Pledge List */}
+            {/* Box 4: Factsheet / Supplements or Pledge List */}
             <div className="border-2 border-gray-800 rounded-lg p-6 md:p-8 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)] transition-shadow">
               <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-start">
                 {module.id !== 12 && (
-                  <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800 flex-shrink-0 mt-1">{module.id === 11 ? 1 : 3}</span>
+                  <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800 flex-shrink-0 mt-1">{module.id === 11 ? 1 : 4}</span>
                 )}
                 {module.id === 11 ? (
                   <span className="text-xl leading-relaxed">Read the list of actions you can take to lead and promote sustainable food habits. Which ones will you pledge? Check the boxes next to your pledges before downloading your certificate!</span>
@@ -967,14 +1156,25 @@ const AppContent = () => {
               )}
             </div>
 
-            {/* Box 4: Action Steps */}
+            {/* Box 5: Post-quiz (show correct answer on wrong selection) */}
+            {module.id !== 11 && module.id !== 12 && (
+              <div className="border-2 border-gray-800 rounded-lg p-6 md:p-8 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)] transition-shadow">
+                <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                  <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800">5</span>
+                  Post-quiz
+                </h2>
+                <QuizWidget questions={module.quiz} mode="post" preAnswers={preQuizAnswers[module.id]} />
+              </div>
+            )}
+
+            {/* Box 6: Action Steps */}
             {module.id !== 12 && (
               <div className="border-2 border-gray-800 rounded-lg p-6 md:p-8 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)] transition-shadow relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-4 opacity-10">
                   <CheckSquare size={100} />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center relative z-10">
-                  <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800">{module.id === 11 ? 2 : 4}</span>
+                  <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800">{module.id === 11 ? 2 : 6}</span>
                   Action steps:
                 </h2>
                 <div className="space-y-4 relative z-10">
