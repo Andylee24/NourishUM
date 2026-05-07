@@ -20,7 +20,15 @@ const QuizWidget = ({ questions, mode, onPreSubmit, preAnswers }) => {
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const isPost = mode === 'post';
-  const hasPreData = isPost && preAnswers && Object.keys(preAnswers).length > 0;
+  const hasSavedPreData = preAnswers && Object.keys(preAnswers).length > 0;
+  const hasPreData = isPost && hasSavedPreData;
+
+  useEffect(() => {
+    if (!isPost && hasSavedPreData) {
+      setAnswers(preAnswers);
+      setSubmitted(true);
+    }
+  }, [hasSavedPreData, isPost, preAnswers]);
 
   const isMulti = (q) => Array.isArray(q.correct);
 
@@ -42,10 +50,7 @@ const QuizWidget = ({ questions, mode, onPreSubmit, preAnswers }) => {
 
   const handleSelect = (qIdx, optIdx) => {
     if (submitted && !isPost) return;
-    if (isPost && hasPreData) {
-      const preResult = checkAnswer(qIdx, preAnswers[qIdx]);
-      if (preResult === true) return;
-    }
+    if (isPost) return;
     setAnswers(prev => {
       if (isMulti(questions[qIdx])) {
         const cur = prev[qIdx] || [];
@@ -61,7 +66,11 @@ const QuizWidget = ({ questions, mode, onPreSubmit, preAnswers }) => {
     if (!isPost && onPreSubmit) onPreSubmit(answers);
   };
 
-  const handleRetry = () => { setAnswers({}); setSubmitted(false); };
+  const handleRetry = () => {
+    setAnswers({});
+    setSubmitted(false);
+    if (onPreSubmit) onPreSubmit({});
+  };
 
   const allAnswered = questions.every((q, i) => {
     const a = answers[i];
@@ -81,7 +90,7 @@ const QuizWidget = ({ questions, mode, onPreSubmit, preAnswers }) => {
         </div>
       )}
       {questions.map((q, qIdx) => {
-        const selected = answers[qIdx];
+        const selected = isPost && hasPreData ? preAnswers[qIdx] : answers[qIdx];
         const multi = isMulti(q);
         const preResult = hasPreData ? checkAnswer(qIdx, preAnswers[qIdx]) : null;
 
@@ -104,16 +113,20 @@ const QuizWidget = ({ questions, mode, onPreSubmit, preAnswers }) => {
               {q.options.map((opt, optIdx) => {
                 const sel = multi ? (selected || []).includes(optIdx) : selected === optIdx;
                 const optCorrect = isCorrectOpt(qIdx, optIdx);
+                const showingPreResult = isPost && hasPreData;
+                const preSel = showingPreResult
+                  ? (multi ? (preAnswers[qIdx] || []).includes(optIdx) : preAnswers[qIdx] === optIdx)
+                  : false;
+                const isSelectedCorrect = showingPreResult && preSel && optCorrect;
+                const isSelectedWrong = showingPreResult && preSel && !optCorrect;
+                const isCorrectAnswer = showingPreResult && optCorrect;
                 let cls = 'border-gray-200 hover:border-gray-400 cursor-pointer';
                 let locked = false;
 
-                if (isPost && preResult === true) {
-                  if (optCorrect) cls = 'border-green-500 bg-green-50';
-                  locked = true;
-                } else if (isPost && preResult === false) {
-                  const preSel = multi ? (preAnswers[qIdx] || []).includes(optIdx) : preAnswers[qIdx] === optIdx;
+                if (showingPreResult) {
                   if (optCorrect) cls = 'border-green-500 bg-green-50';
                   else if (preSel && !optCorrect) cls = 'border-red-500 bg-red-50';
+                  locked = true;
                 } else if (submitted && isPost && !hasPreData) {
                   if (optCorrect) cls = 'border-green-500 bg-green-50';
                   else if (sel && !optCorrect) cls = 'border-red-500 bg-red-50';
@@ -121,15 +134,26 @@ const QuizWidget = ({ questions, mode, onPreSubmit, preAnswers }) => {
                   cls = 'border-[#827717] bg-[#F0F4C3]';
                 }
 
-                if (locked || submitted) cls = cls.replace('cursor-pointer', 'cursor-default');
+                if (locked || submitted || isPost) cls = cls.replace('cursor-pointer', 'cursor-default');
 
                 return (
                   <div key={optIdx} onClick={() => handleSelect(qIdx, optIdx)} className={`p-3 rounded border-2 transition-all flex items-start ${cls}`}>
-                    <div className={`w-5 h-5 border-2 ${multi ? 'rounded' : 'rounded-full'} mr-3 mt-0.5 flex-shrink-0 flex items-center justify-center ${sel || (locked && optCorrect) ? 'bg-[#827717] border-[#827717]' : 'border-gray-400'}`}>
-                      {(sel || (locked && optCorrect)) && <CheckCircle size={12} className="text-white" />}
+                    <div className={`w-5 h-5 border-2 ${multi ? 'rounded' : 'rounded-full'} mr-3 mt-0.5 flex-shrink-0 flex items-center justify-center ${
+                      isSelectedCorrect
+                        ? 'bg-green-600 border-green-600'
+                        : isSelectedWrong
+                          ? 'bg-red-600 border-red-600'
+                          : sel && !showingPreResult
+                            ? 'bg-[#827717] border-[#827717]'
+                            : isCorrectAnswer
+                              ? 'border-green-500 bg-white'
+                              : 'border-gray-400 bg-white'
+                    }`}>
+                      {(isSelectedCorrect || (sel && !showingPreResult)) && <CheckCircle size={12} className="text-white" />}
+                      {isSelectedWrong && <X size={12} className="text-white" />}
                     </div>
                     <span className="text-gray-700 text-sm">{opt}</span>
-                    {((isPost && preResult === true && optCorrect) || (isPost && preResult === false && optCorrect)) && (
+                    {isCorrectAnswer && (
                       <CheckCircle size={16} className="text-green-600 ml-2 mt-0.5 flex-shrink-0" />
                     )}
                   </div>
@@ -326,7 +350,12 @@ const AppContent = () => {
         "Simple plant-forward swap: Commit to one change for the week."
       ],
       supplements: [
-        { title: "Fruits & Vegetables", url: "/new_supplements/Module_6_nutrition_month_veg_split.pdf", type: "document" }
+        {
+          title: "Fruits & Vegetables",
+          url: "/new_supplements/Module_6_nutrition_month_veg_split.pdf",
+          type: "document",
+          source: "HE-AL Vol 6: Change Mindset to Prevent Diet-Related Diseases"
+        }
       ],
       quiz: [
         { question: "Which is a recommended practice for fruits and vegetables?", options: ["Eat at least 5 servings a day", "Eat vegetables once a week", "Avoid fruits because of sugar", "Replace vegetables with snacks"], correct: 0 },
@@ -352,7 +381,12 @@ const AppContent = () => {
         "Swap challenge: Try a whole grain option this week."
       ],
       supplements: [
-        { title: "Rice, other cereals, wholegrain cereal-based products and tubers", url: "/new_supplements/Module_7_nutrition_month_grains_split.pdf", type: "document" }
+        {
+          title: "Rice, other cereals, wholegrain cereal-based products and tubers",
+          url: "/new_supplements/Module_7_nutrition_month_grains_split.pdf",
+          type: "document",
+          source: "HE-AL Vol 6: Change Mindset to Prevent Diet-Related Diseases"
+        }
       ],
       quiz: [
         { question: "Which is a whole grain choice?", options: ["Brown rice", "White bread", "Refined noodles", "Sugary cereal"], correct: 0 },
@@ -431,7 +465,12 @@ const AppContent = () => {
       ],
       supplements: [
         { title: "Changing Eating Habits", url: "/new_supplements/M10.pdf", type: "document" },
-        { title: "Changing Eating Habits", url: "/new_supplements/nutrition%20month%20upf.pdf", type: "document" }
+        {
+          title: "Changing Eating Habits",
+          url: "/new_supplements/nutrition%20month%20upf.pdf",
+          type: "document",
+          source: "HE-AL Vol 6: Change Mindset to Prevent Diet-Related Diseases"
+        }
       ],
       quiz: [
         { question: "What helps build a lasting, healthy habit?", options: ["Making small changes consistently", "Changing everything at once", "Skipping meals", "Eating randomly"], correct: 0 },
@@ -1007,7 +1046,12 @@ const AppContent = () => {
                   <span className="bg-[#D4E157] w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm border border-gray-800">1</span>
                   Pre-quiz
                 </h2>
-                <QuizWidget questions={module.quiz} mode="pre" onPreSubmit={(answers) => savePreQuiz(module.id, answers)} />
+                <QuizWidget
+                  questions={module.quiz}
+                  mode="pre"
+                  preAnswers={preQuizAnswers[module.id]}
+                  onPreSubmit={(answers) => savePreQuiz(module.id, answers)}
+                />
               </div>
             )}
 
@@ -1139,12 +1183,21 @@ const AppContent = () => {
 
                           {/* All PDFs mapped to their own individual preview boxes */}
                           {module.supplements.filter(item => item.type === 'document').map((item, idx) => (
-                            <SupplementPreview
-                              key={`doc-${idx}`}
-                              url={item.url}
-                              title={item.title}
-                              type={item.type}
-                            />
+                            <div key={`doc-${idx}`} className="space-y-3">
+                              <SupplementPreview
+                                url={item.url}
+                                title={item.title}
+                                type={item.type}
+                              />
+                              {item.source && (
+                                <div className="flex justify-end">
+                                  <div className="inline-flex items-start gap-2 rounded-lg border border-[#D4E157]/70 bg-[#F9FBE7] px-4 py-2 text-sm text-gray-600 shadow-sm">
+                                    <span className="font-bold text-[#827717]">Source:</span>
+                                    <span>{item.source}</span>
+                                  </div>
+                                </div>
+                              )}
+                            </div>
                           ))}
                         </div>
                       )}
@@ -1288,9 +1341,9 @@ const AppContent = () => {
               <div
                 key={module.id}
                 onClick={() => openModule(module)}
-                className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] xl:w-[calc(25%-1.5rem)] group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer border-0 flex flex-col h-full ring-1 ring-gray-100"
+                className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] xl:w-[calc(25%-1.5rem)] max-w-[360px] group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer border-0 flex flex-col h-[500px] ring-1 ring-gray-100"
               >
-                <div className="relative h-56 overflow-hidden bg-[#2E7D32]">
+                <div className="relative h-48 flex-shrink-0 overflow-hidden bg-[#2E7D32]">
                   {/* Dynamic text-based Module banner replacing the old image */}
                   <div className="w-full h-full flex items-center justify-center bg-gradient-to-tr from-[#388E3C] to-[#4CAF50] group-hover:from-[#2E7D32] group-hover:to-[#388E3C] transition-colors duration-500">
                     <div className="transition-transform duration-700 group-hover:scale-105 group-hover:-rotate-1">
@@ -1313,12 +1366,12 @@ const AppContent = () => {
                   </div>
                 </div>
 
-                <div className="p-6 flex flex-col flex-grow bg-white relative">
-                  <h4 className="font-bold text-gray-800 text-xl mb-3 leading-snug group-hover:text-[#6e7aba] transition-colors">{module.title}</h4>
-                  <p className="text-gray-500 text-sm line-clamp-3 mb-6 flex-grow leading-relaxed">{module.description}</p>
+                <div className="p-6 flex flex-col flex-grow bg-white relative min-h-0">
+                  <h4 className="font-bold text-gray-800 text-xl mb-3 leading-snug group-hover:text-[#6e7aba] transition-colors line-clamp-3 min-h-[5rem]">{module.title}</h4>
+                  <p className="text-gray-500 text-sm line-clamp-3 mb-6 leading-relaxed min-h-[4.5rem]">{module.description}</p>
 
                   <div className="border-t border-gray-100 pt-4 mt-auto flex items-center justify-between text-sm">
-                    <span className="text-gray-400 flex items-center font-medium"><BookOpen size={16} className="mr-2 text-gray-300" /> {module.actionSteps.length} Steps</span>
+                    <span className="text-gray-400 flex items-center font-medium"><BookOpen size={16} className="mr-2 text-gray-300" /> {module.id === 11 ? 2 : 6} Steps</span>
                     <span className="font-bold text-[#7986CB] bg-[#E8EAF6] px-3 py-1.5 rounded-lg group-hover:bg-[#7986CB] group-hover:text-white transition-all inline-flex items-center">Start <ChevronRight size={14} className="ml-1" /></span>
                   </div>
                 </div>
@@ -1347,7 +1400,6 @@ const AppContent = () => {
 
           <nav className="hidden md:flex items-center space-x-8 font-semibold">
             <Link to="/" className={`hover:bg-white/20 px-3 py-1 rounded transition-colors ${location.pathname === '/' ? 'bg-white/20' : ''}`}>Curriculum</Link>
-            <Link to="/quiz" className={`hover:bg-white/20 px-3 py-1 rounded transition-colors ${location.pathname === '/quiz' ? 'bg-white/20' : ''}`}>Quiz</Link>
             <Link to="/resources" className={`hover:bg-white/20 px-3 py-1 rounded transition-colors ${location.pathname === '/resources' ? 'bg-white/20' : ''}`}>Resources</Link>
 
             {user ? (
@@ -1375,7 +1427,6 @@ const AppContent = () => {
         {isMenuOpen && (
           <div className="md:hidden bg-[#c0ca33] px-4 py-4 space-y-4 shadow-inner">
             <Link to="/" onClick={() => setIsMenuOpen(false)} className="block hover:text-white w-full text-left font-medium">Curriculum</Link>
-            <Link to="/quiz" onClick={() => setIsMenuOpen(false)} className="block hover:text-white w-full text-left font-medium">Quiz</Link>
             <Link to="/resources" onClick={() => setIsMenuOpen(false)} className="block hover:text-white w-full text-left font-medium">Resources</Link>
             {user ? (
               <button onClick={handleLogout} className="w-full bg-gray-800 text-white px-5 py-3 rounded-lg font-bold">Logout</button>
