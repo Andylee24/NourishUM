@@ -14,6 +14,14 @@ import {
   useNavigate,
   useLocation
 } from 'react-router-dom';
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile
+} from 'firebase/auth';
+import { auth, isFirebaseConfigured } from './firebase';
 
 // QuizWidget — Pre (record answers, no feedback) and Post (show results based on Pre)
 const QuizWidget = ({ questions, mode, onPreSubmit, preAnswers }) => {
@@ -194,8 +202,27 @@ const AppContent = () => {
   // --- State Management ---
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useState(null); // null = guest, object = logged in
+  const [authLoading, setAuthLoading] = useState(false);
+  const [authError, setAuthError] = useState('');
   const [completedActions, setCompletedActions] = useState({}); // { moduleId: { actionIndex: boolean } }
   const [preQuizAnswers, setPreQuizAnswers] = useState({}); // { moduleId: { qIdx: selectedOption | [indices] } }
+
+  useEffect(() => {
+    if (!auth) return undefined;
+
+    return onAuthStateChanged(auth, (firebaseUser) => {
+      if (!firebaseUser) {
+        setUser(null);
+        return;
+      }
+
+      setUser({
+        uid: firebaseUser.uid,
+        name: firebaseUser.displayName || 'Student',
+        email: firebaseUser.email
+      });
+    });
+  }, []);
 
   // --- Curriculum Data ---
   const modules = [
@@ -574,17 +601,73 @@ const AppContent = () => {
     setPreQuizAnswers(prev => ({ ...prev, [moduleId]: answers }));
   };
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    setTimeout(() => {
-      setUser({ name: "Student", email: "student@um.edu.my" });
-      navigate('/');
-    }, 500);
+  const getAuthErrorMessage = (error) => {
+    switch (error.code) {
+      case 'auth/email-already-in-use':
+        return 'This email is already registered. Please log in instead.';
+      case 'auth/invalid-email':
+        return 'Please enter a valid email address.';
+      case 'auth/invalid-credential':
+      case 'auth/wrong-password':
+      case 'auth/user-not-found':
+        return 'Email or password is incorrect.';
+      case 'auth/weak-password':
+        return 'Password should be at least 6 characters.';
+      case 'auth/too-many-requests':
+        return 'Too many attempts. Please wait a moment and try again.';
+      default:
+        return error.message || 'Something went wrong. Please try again.';
+    }
   };
 
-  const handleLogout = () => {
-    setUser(null);
-    navigate('/');
+  const handleAuthSubmit = async (e, type) => {
+    e.preventDefault();
+    setAuthError('');
+
+    if (!isFirebaseConfigured || !auth) {
+      setAuthError('Firebase is not configured yet. Please add your VITE_FIREBASE_* values to .env.');
+      return;
+    }
+
+    const formData = new FormData(e.currentTarget);
+    const fullName = String(formData.get('fullName') || '').trim();
+    const email = String(formData.get('email') || '').trim();
+    const password = String(formData.get('password') || '');
+
+    try {
+      setAuthLoading(true);
+
+      if (type === 'signup') {
+        const credential = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(credential.user, { displayName: fullName || 'Student' });
+        setUser({
+          uid: credential.user.uid,
+          name: fullName || 'Student',
+          email: credential.user.email
+        });
+      } else {
+        await signInWithEmailAndPassword(auth, email, password);
+      }
+
+      navigate('/');
+    } catch (error) {
+      setAuthError(getAuthErrorMessage(error));
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      if (auth) {
+        await signOut(auth);
+      } else {
+        setUser(null);
+      }
+      navigate('/');
+    } catch (error) {
+      setAuthError(getAuthErrorMessage(error));
+    }
   };
 
   const handleDownloadCertificate = () => {
@@ -857,13 +940,13 @@ const AppContent = () => {
             {type === 'login' ? 'Continue your healthy journey' : 'Start your sustainable diet today'}
           </p>
         </div>
-        <form className="space-y-4" onSubmit={handleLogin}>
+        <form className="space-y-4" onSubmit={(e) => handleAuthSubmit(e, type)}>
           {type === 'signup' && (
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
               <div className="relative">
                 <User className="absolute left-3 top-3 text-gray-400" size={20} />
-                <input type="text" className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#D4E157] focus:outline-none" placeholder="John Doe" required />
+                <input name="fullName" type="text" className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#D4E157] focus:outline-none" placeholder="John Doe" required />
               </div>
             </div>
           )}
@@ -871,18 +954,23 @@ const AppContent = () => {
             <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
             <div className="relative">
               <Mail className="absolute left-3 top-3 text-gray-400" size={20} />
-              <input type="email" className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#D4E157] focus:outline-none" placeholder="you@student.um.edu.my" required />
+              <input name="email" type="email" className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#D4E157] focus:outline-none" placeholder="you@student.um.edu.my" required />
             </div>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
             <div className="relative">
               <Lock className="absolute left-3 top-3 text-gray-400" size={20} />
-              <input type="password" className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#D4E157] focus:outline-none" placeholder="••••••••" required />
+              <input name="password" type="password" minLength={6} className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#D4E157] focus:outline-none" placeholder="••••••••" required />
             </div>
           </div>
-          <button type="submit" className="w-full bg-[#D4E157] hover:bg-[#c0ca33] text-gray-900 font-bold py-3 rounded-lg transition shadow-md mt-6">
-            {type === 'login' ? 'Log In' : 'Create Account'}
+          {authError && (
+            <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+              {authError}
+            </div>
+          )}
+          <button type="submit" disabled={authLoading} className="w-full bg-[#D4E157] hover:bg-[#c0ca33] disabled:opacity-60 disabled:cursor-not-allowed text-gray-900 font-bold py-3 rounded-lg transition shadow-md mt-6">
+            {authLoading ? 'Please wait...' : (type === 'login' ? 'Log In' : 'Create Account')}
           </button>
         </form>
         <div className="mt-6 text-center text-sm text-gray-600">
