@@ -857,42 +857,44 @@ const AppContent = () => {
 
   // --- Sub-Components ---
 
-  const QuizView = () => (
-    <div className="flex-grow bg-[#F9FBE7] py-16 px-4">
-      <div className="container mx-auto max-w-4xl">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 font-handwriting">Quiz</h1>
-          <div className="h-1 w-24 bg-[#D4E157] mx-auto rounded-full mb-6"></div>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Test your knowledge on sustainable diets and healthy eating habits.
-          </p>
-        </div>
+  const QuizView = () => {
+    return (
+      <div className="flex-grow bg-[#F9FBE7] py-16 px-4">
+        <div className="container mx-auto max-w-4xl">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 font-handwriting">Quiz</h1>
+            <div className="h-1 w-24 bg-[#D4E157] mx-auto rounded-full mb-6"></div>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Test your knowledge on sustainable diets and healthy eating habits.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {[
-            { title: "Sustainable Diet Basics", description: "Test your understanding of sustainable diet principles and components.", link: "https://docs.google.com/forms/d/e/1FAIpQLSctqUuTHVofFWiRGZVWoJQXuIgipANhYjXwEPMgVASCXczsww/viewform" },
-            { title: "Food Labels & Choices", description: "Check your knowledge on reading food labels and making informed choices.", link: "https://docs.google.com/forms/d/e/1FAIpQLSctqUuTHVofFWiRGZVWoJQXuIgipANhYjXwEPMgVASCXczsww/viewform" }
-          ].map((quiz, idx) => (
-            <a
-              key={idx}
-              href={quiz.link}
-              target="_blank"
-              rel="noreferrer"
-              className="block p-6 rounded-2xl border-2 border-gray-800 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)] hover:-translate-y-1 transition-all group"
-            >
-              <div className="flex items-center mb-3">
-                <div className="bg-[#F0F4C3] p-3 rounded-xl mr-4 border border-gray-200">
-                  <Target size={24} className="text-[#827717]" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              { title: "Sustainable Diet Basics", description: "Test your understanding of sustainable diet principles and components.", link: "https://docs.google.com/forms/d/e/1FAIpQLSctqUuTHVofFWiRGZVWoJQXuIgipANhYjXwEPMgVASCXczsww/viewform" },
+              { title: "Food Labels & Choices", description: "Check your knowledge on reading food labels and making informed choices.", link: "https://docs.google.com/forms/d/e/1FAIpQLSctqUuTHVofFWiRGZVWoJQXuIgipANhYjXwEPMgVASCXczsww/viewform" }
+            ].map((quiz, idx) => (
+              <a
+                key={idx}
+                href={quiz.link}
+                target="_blank"
+                rel="noreferrer"
+                className="block p-6 rounded-2xl border-2 border-gray-800 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.8)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,0.8)] hover:-translate-y-1 transition-all group"
+              >
+                <div className="flex items-center mb-3">
+                  <div className="bg-[#F0F4C3] p-3 rounded-xl mr-4 border border-gray-200">
+                    <Target size={24} className="text-[#827717]" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-800 group-hover:text-[#827717] transition-colors">{quiz.title}</h3>
                 </div>
-                <h3 className="text-xl font-bold text-gray-800 group-hover:text-[#827717] transition-colors">{quiz.title}</h3>
-              </div>
-              <p className="text-gray-500 ml-16">{quiz.description}</p>
-            </a>
-          ))}
+                <p className="text-gray-500 ml-16">{quiz.description}</p>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const ResourcesView = () => (
     <div className="flex-grow bg-[#F9FBE7] py-16 px-4">
@@ -1436,46 +1438,46 @@ const AppContent = () => {
           </div>
 
           <div className="flex flex-wrap justify-center gap-8">
-            {modules.filter(m => m.id !== 12).map((module) => (
-              <div
-                key={module.id}
-                onClick={() => openModule(module)}
-                className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] xl:w-[calc(25%-1.5rem)] max-w-[360px] group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer border-0 flex flex-col h-[500px] ring-1 ring-gray-100"
-              >
-                <div className="relative h-48 flex-shrink-0 overflow-hidden bg-[#2E7D32]">
-                  {/* Dynamic text-based Module banner replacing the old image */}
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-tr from-[#388E3C] to-[#4CAF50] group-hover:from-[#2E7D32] group-hover:to-[#388E3C] transition-colors duration-500">
-                    <div className="transition-transform duration-700 group-hover:scale-105 group-hover:-rotate-1">
-                      <span className="text-4xl font-black text-[#FFF176] uppercase tracking-wider drop-shadow-md">
-                        Module {module.id}
-                      </span>
+              {modules.filter(m => m.id !== 12).map((module) => (
+                <div
+                  key={module.id}
+                  onClick={() => openModule(module)}
+                  className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.333rem)] xl:w-[calc(25%-1.5rem)] max-w-[360px] group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer border-0 flex flex-col h-[500px] ring-1 ring-gray-100"
+                >
+                  <div className="relative h-48 flex-shrink-0 overflow-hidden bg-[#2E7D32]">
+                    {/* Dynamic text-based Module banner replacing the old image */}
+                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-tr from-[#388E3C] to-[#4CAF50] group-hover:from-[#2E7D32] group-hover:to-[#388E3C] transition-colors duration-500">
+                      <div className="transition-transform duration-700 group-hover:scale-105 group-hover:-rotate-1">
+                        <span className="text-4xl font-black text-[#FFF176] uppercase tracking-wider drop-shadow-md">
+                          Module {module.id}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="absolute top-0 right-0 m-3 px-3 py-1 rounded-full text-xs font-bold text-white backdrop-blur-md bg-black/40 shadow-sm border border-white/10">
+                      {module.time}
+                    </div>
+
+                    <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-opacity duration-300"></div>
+
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-75 group-hover:scale-100">
+                      <div className="bg-white/20 backdrop-blur-sm p-4 rounded-full border border-white/50 shadow-2xl mt-16">
+                        <PlayCircle className="text-white w-10 h-10" fill="currentColor" stroke="none" />
+                      </div>
                     </div>
                   </div>
 
-                  <div className="absolute top-0 right-0 m-3 px-3 py-1 rounded-full text-xs font-bold text-white backdrop-blur-md bg-black/40 shadow-sm border border-white/10">
-                    {module.time}
-                  </div>
+                  <div className="p-6 flex flex-col flex-grow bg-white relative min-h-0">
+                    <h4 className="font-bold text-gray-800 text-xl mb-3 leading-snug group-hover:text-[#6e7aba] transition-colors line-clamp-3 min-h-[5rem]">{module.title}</h4>
+                    <p className="text-gray-500 text-sm line-clamp-3 mb-6 leading-relaxed min-h-[4.5rem]">{module.description}</p>
 
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-opacity duration-300"></div>
-
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-75 group-hover:scale-100">
-                    <div className="bg-white/20 backdrop-blur-sm p-4 rounded-full border border-white/50 shadow-2xl mt-16">
-                      <PlayCircle className="text-white w-10 h-10" fill="currentColor" stroke="none" />
+                    <div className="border-t border-gray-100 pt-4 mt-auto flex items-center justify-between text-sm">
+                      <span className="text-gray-400 flex items-center font-medium"><BookOpen size={16} className="mr-2 text-gray-300" /> {module.id === 11 ? 2 : 6} Steps</span>
+                      <span className="font-bold text-[#7986CB] bg-[#E8EAF6] px-3 py-1.5 rounded-lg group-hover:bg-[#7986CB] group-hover:text-white transition-all inline-flex items-center">Start <ChevronRight size={14} className="ml-1" /></span>
                     </div>
                   </div>
                 </div>
-
-                <div className="p-6 flex flex-col flex-grow bg-white relative min-h-0">
-                  <h4 className="font-bold text-gray-800 text-xl mb-3 leading-snug group-hover:text-[#6e7aba] transition-colors line-clamp-3 min-h-[5rem]">{module.title}</h4>
-                  <p className="text-gray-500 text-sm line-clamp-3 mb-6 leading-relaxed min-h-[4.5rem]">{module.description}</p>
-
-                  <div className="border-t border-gray-100 pt-4 mt-auto flex items-center justify-between text-sm">
-                    <span className="text-gray-400 flex items-center font-medium"><BookOpen size={16} className="mr-2 text-gray-300" /> {module.id === 11 ? 2 : 6} Steps</span>
-                    <span className="font-bold text-[#7986CB] bg-[#E8EAF6] px-3 py-1.5 rounded-lg group-hover:bg-[#7986CB] group-hover:text-white transition-all inline-flex items-center">Start <ChevronRight size={14} className="ml-1" /></span>
-                  </div>
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </section>
