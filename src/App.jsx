@@ -245,7 +245,7 @@ const AppContent = () => {
         "Reflection prompt: Write down why this principle matters for your health or the environment."
       ],
       supplements: [
-        { title: "What is a Sustainable Diet", url: "/new_supplements/What%20is%20a%20Sustainable%20Diet.pdf", type: "document" }
+        { title: "What is a Sustainable Diet", url: "/new_supplements/M1.pdf", type: "document" }
       ],
       quiz: [
         { question: "Which of the following best reflects sustainable diet principles?", options: ["Eat more meat and fewer vegetables", "Choose foods high in fat, sugar, and salt", "Eat a varied, balanced diet and include more plant-based foods", "Skip meals to reduce food consumption"], correct: 2 },
@@ -272,7 +272,7 @@ const AppContent = () => {
         "Key takeaway identification: Write down one key message that changed your thinking."
       ],
       supplements: [
-        { title: "Our Choices Matter", url: "/new_supplements/Our%20Choices%20Matter.pdf", type: "document" }
+        { title: "Our Choices Matter", url: "/new_supplements/M2.pdf", type: "document" }
       ],
       quiz: [
         { question: "Which of the following best represents the main challenges of food systems?", options: ["High carbon footprint, low wages, unhealthy food choices", "Too many vegetables, too much food", "Not enough supermarkets", "People cooking too much"], correct: 0 },
@@ -476,7 +476,7 @@ const AppContent = () => {
         "Reduce packaging: Bring reusable items."
       ],
       supplements: [
-        { title: "Food Waste and Packaging", url: "/new_supplements/Food%20Waste%20and%20Packaging.pdf", type: "document" }
+        { title: "Food Waste and Packaging", url: "/new_supplements/M9.pdf", type: "document" }
       ],
       quiz: [
         { question: "What do you think, how big a problem is food waste?", options: ["Close to a third of the world's food production is wasted each year.", "The equivalent of 990 billion USD is lost to food waste each year.", "The world's food waste can feed 2 billion people.", "Food waste contributes to 8% to global greenhouse gas emissions."], correct: [0, 1, 2, 3] },
@@ -1203,7 +1203,7 @@ const AppContent = () => {
                   {[
                     "Opt for foods that have a lower climate footprint and try to reduce my meat consumption.",
                     "Look for foods that show that the environment, workers, and local communities were respected in the food production.",
-                    "Choose local and seasonal food whenever available; buy frozen / canned food is local and seasonal is not available.",
+                    "Choose local and seasonal food whenever available.",
                     "Consult the labels to ensure I am buying nutritious and varied foods, in line with dietary guidelines.",
                     "Choose whole grain instead of white flour, eat less sugar, fat, and salt, avoid overeating, and drink more water.",
                     "Eat more fruits and vegetables and try to swap animal protein for plant-based ones.",
